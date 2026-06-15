@@ -1,3 +1,6 @@
 .DS_Store
 .env
 .env.*
+
+# Clé privée d'auth registre MCP — ne jamais committer
+key.pem

@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "app.trustydata/trustydata",
   "title": "TrustyData",
-  "description": "French address data quality, geocoding and routing from official sources (BAN, INSEE, OpenStreetMap): verify and normalize addresses, search addresses and communes, proximity search and road routing in France.",
+  "description": "French address quality, geocoding & routing from official data (BAN, INSEE, OpenStreetMap).",
   "version": "1.0.0",
   "websiteUrl": "https://trustydata.fr",
   "repository": {
