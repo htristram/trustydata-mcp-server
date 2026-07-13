@@ -1,8 +1,18 @@
 # TrustyData MCP Server
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![MCP](https://img.shields.io/badge/MCP-hosted%20remote%20server-6f42c1)](https://mcp.trustydata.app/mcp)
+[![Status](https://img.shields.io/badge/status-page-brightgreen)](https://status.trustydata.app)
+
 Connect your LLM (Claude, ChatGPT, IDE assistants…) to **[TrustyData](https://trustydata.fr)** —
 French **address data quality**, geocoding and routing, built on official open
 data sources (**BAN**, **INSEE**, **OpenStreetMap**).
+
+**▶️ [Try it live — public demo agent, no account needed](https://trustydata.fr/demo/mcp-agent)**
+Ask a real agent to verify an address, list communes or compute a route: it calls
+this MCP server in front of you.
+
+[![TrustyData MCP demo agent](./assets/demo-mcp-agent.png)](https://trustydata.fr/demo/mcp-agent)
 
 This is a **hosted, remote MCP server** — there is nothing to install or run.
 Point your MCP client at the endpoint below and sign in with your TrustyData
@@ -77,7 +87,8 @@ time a tool is used.
 ```
 
 Don't have an account yet? Start free on
-**[trustydata.fr](https://trustydata.fr)** (15-day trial, no card).
+**[trustydata.fr](https://trustydata.fr)** — the Discovery plan is free
+(5,000 requests/month, no card required).
 
 ## Example prompts
 
