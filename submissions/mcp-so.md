@@ -23,8 +23,10 @@ Target: **mcp.so** — high-traffic community directory of MCP servers.
 > Give your AI assistant real French addresses instead of guesses. TrustyData
 > verifies and normalizes any French address against the official BAN reference
 > (26M+ addresses), returns GPS coordinates, INSEE codes and neighborhood-level
-> socio-demographics, and computes real road routes. One remote server, OAuth
+> socio-demographics, computes real road routes, looks up companies in the
+> official SIRENE registry and measures catchment areas (population, income,
+> spending potential). One remote server, OAuth
 > sign-in, free tier — works with Claude, ChatGPT (developer mode) and any MCP
 > client.
 
-**Tags**: `address, geocoding, france, maps, routing, open-data`
+**Tags**: `address, geocoding, france, maps, routing, open-data, sirene, company-data, catchment-area`

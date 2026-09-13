@@ -25,23 +25,27 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 
 **Tagline (short)**
 
-> French address quality, geocoding & routing from official data (BAN, INSEE, OpenStreetMap).
+> French address quality, geocoding, routing, company lookup & catchment stats (BAN, INSEE, OSM).
 
 **Description (long)**
 
 > TrustyData connects your LLM to authoritative French address data. Verify and
 > normalize postal addresses against the official BAN reference, search addresses
 > and communes by name / postal code / INSEE code, run proximity searches, and
-> compute road routes or travel-time/distance matrices in France. Data comes from
+> compute road routes or travel-time/distance matrices in France. Look up French
+> companies and establishments in the SIRENE registry, and measure a catchment
+> area — population, income, socio-professional profile, spending potential of a
+> drive-time or radius zone — or compare up to ten of them. Data comes from
 > official, regularly-updated open sources — BAN and INSEE for addresses and
-> communes, OpenStreetMap (ODbL) for routing. Results are authoritative: an empty
+> communes, SIRENE (INSEE) and RNE (INPI) for companies, INSEE Filosofi and
+> census plus IGN contours for catchment areas, OpenStreetMap (ODbL) for routing. Results are authoritative: an empty
 > result means no match, never a guess.
 
 **Tags / categories**
 
 ```
 address-validation, geocoding, france, routing, maps, data-quality,
-ban, insee, openstreetmap
+ban, insee, openstreetmap, sirene, company-data, catchment-area
 ```
 
 **Tools (auto-detected by Smithery; min plan for reference)**
@@ -53,8 +57,12 @@ ban, insee, openstreetmap
 | `get_address_details` | Full detail for a given address id | Discovery |
 | `search_locality` | Search French communes / localities | Discovery |
 | `search_nearby` | Proximity search around a point | Growth |
-| `route_matrix` | Travel-time / distance matrix | Growth |
-| `compute_route` | Full road route between points | Business |
+| `route_matrix` | Travel-time / distance matrix (car, foot, bike) | Growth |
+| `compute_route` | Full road route between points (car, foot, bike) | Business |
+| `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
+| `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
+| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential of a catchment area (drive time or radius) | Growth |
+| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking | Growth |
 
 **Example prompts**
 
@@ -63,6 +71,8 @@ Vérifie et normalise cette adresse : "1 rue de Rivol 75001 Pari"
 Quelle est la population de la commune de Bourg-en-Bresse ?
 Trouve les adresses proches du 2 avenue de la Gare à Annecy.
 Calcule l'itinéraire routier entre Lyon Part-Dieu et l'aéroport Saint-Exupéry.
+Trouve les entreprises de plomberie à Annecy et donne-moi la fiche du premier établissement.
+Combien de personnes habitent à 15 minutes en voiture du 1 rue Scribe, 75009 Paris ?
 ```
 
 ## Optional — richer auto-metadata

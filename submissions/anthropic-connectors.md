@@ -20,7 +20,9 @@ check the current process in Anthropic's developer docs.
 > Validez, géolocalisez et enrichissez des adresses françaises directement dans
 > Claude. TrustyData s'appuie exclusivement sur les référentiels officiels (BAN,
 > INSEE, IGN, OpenStreetMap) : vérification d'adresse, coordonnées GPS, code
-> IRIS, données socio-démographiques de quartier, itinéraires routiers. Aucun
+> IRIS, données socio-démographiques de quartier, itinéraires routiers, recherche
+> d'entreprises (SIRENE) et statistiques de zone de chalandise (population,
+> revenus, profil, potentiel de dépense). Aucun
 > code à écrire — connectez-vous et posez votre question. Plan gratuit : 5 000
 > requêtes/mois.
 
@@ -29,7 +31,9 @@ check the current process in Anthropic's developer docs.
 > Verify, geocode and enrich French addresses directly inside Claude.
 > TrustyData relies exclusively on official French reference data (BAN, INSEE,
 > IGN, OpenStreetMap): address verification, GPS coordinates, INSEE territorial
-> codes, neighborhood-level demographics and road routing. No code required —
+> codes, neighborhood-level demographics, road routing, company lookup (SIRENE)
+> and catchment-area statistics (population, income, profile, spending
+> potential). No code required —
 > sign in and ask. Free plan: 5,000 requests/month.
 
 ## Example prompts to include
@@ -38,4 +42,5 @@ check the current process in Anthropic's developer docs.
 Vérifie cette adresse : "215 acac ste euphemie"
 Quel est le code IRIS du 12 rue de la République à Lyon ?
 Compare les temps de trajet entre ces trois agences et le centre de Dijon.
+Combien de personnes habitent à 15 minutes en voiture de la gare de Dijon, et quel est leur niveau de vie ?
 ```

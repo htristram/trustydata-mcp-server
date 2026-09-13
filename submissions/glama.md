@@ -30,8 +30,9 @@ public status page, OAuth).
 > OAuth 2.1 (no API keys pasted into clients), Streamable HTTP, EU hosting with
 > a public status page (status.trustydata.app). Tools cover address verification
 > against the official BAN registry, geocoding (WGS84/Lambert 93), INSEE
-> territorial enrichment, proximity search and road routing. Results are
+> territorial enrichment, proximity search, road routing, company lookup in the
+> official SIRENE registry and catchment-area statistics (INSEE). Results are
 > authoritative: an empty result means no match, never a guess. Free tier
 > available (5,000 requests/month).
 
-**Tags**: `address-validation, geocoding, france, routing, data-quality, ban, insee, openstreetmap`
+**Tags**: `address-validation, geocoding, france, routing, data-quality, ban, insee, openstreetmap, sirene, company-data, catchment-area`

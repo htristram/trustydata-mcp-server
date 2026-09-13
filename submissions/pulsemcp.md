@@ -22,6 +22,7 @@ whether the listing appeared automatically before submitting manually.
 
 > Ask your assistant to "check this address" or "enrich this customer file with
 > INSEE codes" and get answers grounded in official French open data. TrustyData
-> exposes 7 tools — verify, autocomplete, locality search, proximity, routing,
-> territorial enrichment — through a single hosted MCP endpoint. No local
+> exposes 11 tools — verify, autocomplete, locality search, proximity, routing,
+> territorial enrichment, company lookup (SIRENE) and catchment-area statistics
+> (INSEE) — through a single hosted MCP endpoint. No local
 > install: connect via URL + OAuth in two minutes.

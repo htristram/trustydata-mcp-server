@@ -5,12 +5,13 @@
 [![Status](https://img.shields.io/badge/status-page-brightgreen)](https://status.trustydata.app)
 
 Connect your LLM (Claude, ChatGPT, IDE assistants…) to **[TrustyData](https://trustydata.fr)** —
-French **address data quality**, geocoding and routing, built on official open
-data sources (**BAN**, **INSEE**, **OpenStreetMap**).
+French **address data quality**, geocoding, routing, **company lookup** (SIRENE)
+and **catchment-area statistics** (INSEE), built on official open data sources
+(**BAN**, **INSEE**, **SIRENE**, **IGN**, **OpenStreetMap**).
 
 **▶️ [Try it live — public demo agent, no account needed](https://trustydata.fr/demo/mcp-agent)**
-Ask a real agent to verify an address, list communes or compute a route: it calls
-this MCP server in front of you.
+Ask a real agent to verify an address, list communes, look up a company or
+compute a route: it calls this MCP server in front of you.
 
 [![TrustyData MCP demo agent](./assets/demo-mcp-agent.png)](https://trustydata.fr/demo/mcp-agent)
 
@@ -41,7 +42,14 @@ geographic context, directly inside your LLM conversation:
   optional filters (department, region, population).
 - **Proximity search** — find addresses or points near a location.
 - **Routing** — compute a road route or a travel-time/distance matrix in France
-  (OpenStreetMap).
+  (OpenStreetMap), by car, on foot or by bike.
+- **Company lookup** — search French companies and establishments in the
+  official **SIRENE** registry and get full records (executives, finances,
+  collective agreements, depending on your plan).
+- **Catchment areas** — population, households, income, age and
+  socio-professional profile, spending potential of a drive-time or radius zone
+  (**INSEE** Filosofi & census); compare up to 10 zones and measure what each
+  one covers exclusively.
 
 Richer fields (e.g. INSEE Filosofi statistical grid, Lambert 93 coordinates) are
 returned depending on your plan.
@@ -55,8 +63,12 @@ returned depending on your plan.
 | `get_address_details` | Full detail for a given address id | Discovery |
 | `search_locality` | Search French communes / localities | Discovery |
 | `search_nearby` | Proximity search around a point | Growth |
-| `route_matrix` | Travel-time / distance matrix | Growth |
-| `compute_route` | Full road route between points | Business |
+| `route_matrix` | Travel-time / distance matrix (car, foot, bike) | Growth |
+| `compute_route` | Full road route between points (car, foot, bike) | Business |
+| `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
+| `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
+| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential of a catchment area (drive time or radius) | Growth |
+| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking | Growth |
 
 All tools are advertised to every client. If your plan doesn't cover a tool, it
 returns an actionable upgrade message instead of failing silently.
@@ -100,6 +112,12 @@ Quelle est la population de la commune de Bourg-en-Bresse ?
 Trouve les adresses proches du 2 avenue de la Gare à Annecy.
 
 Calcule l'itinéraire routier entre Lyon Part-Dieu et l'aéroport Saint-Exupéry.
+
+Trouve les entreprises de plomberie à Annecy et donne-moi la fiche du premier établissement.
+
+Combien de personnes habitent à 15 minutes en voiture du 1 rue Scribe, 75009 Paris, et quel est leur niveau de vie ?
+
+Compare 10 minutes en voiture autour de la Part-Dieu et autour de Bellecour : quelle zone capte le plus d'habitants qu'elle est seule à couvrir ?
 ```
 
 ## Data sources & attribution
@@ -108,7 +126,8 @@ TrustyData relies on official, regularly-updated open data. Please keep the
 attributions returned by the tools:
 
 - **Addresses & communes** — Base Adresse Nationale (BAN) & INSEE
-- **Statistical context** — INSEE Filosofi
+- **Companies** — SIRENE (INSEE), Registre National des Entreprises (INPI)
+- **Statistical context & catchment areas** — INSEE Filosofi and census, IGN Contours IRIS
 - **Routing** — OpenStreetMap contributors (ODbL)
 
 ## Documentation

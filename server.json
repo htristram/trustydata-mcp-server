@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "app.trustydata/trustydata",
   "title": "TrustyData",
-  "description": "French address quality, geocoding & routing from official data (BAN, INSEE, OpenStreetMap).",
-  "version": "1.0.0",
+  "description": "French address quality, geocoding, routing, company lookup & catchment stats (BAN, INSEE, OSM).",
+  "version": "1.1.0",
   "websiteUrl": "https://trustydata.fr",
   "repository": {
     "url": "https://github.com/htristram/trustydata-mcp-server",
