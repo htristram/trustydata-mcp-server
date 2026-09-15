@@ -73,6 +73,25 @@ returned depending on your plan.
 All tools are advertised to every client. If your plan doesn't cover a tool, it
 returns an actionable upgrade message instead of failing silently.
 
+## Prompts
+
+Beyond tools, the server ships five **prompts** — guided starters that fill in
+the right parameters for you. In Claude Code they show up as
+`/mcp__trustydata__<name>`; other MCP clients surface them their own way.
+
+| Prompt | Arguments | What it does |
+|---|---|---|
+| `zone_de_chalandise` | `adresse`, `minutes` (10), `mode` (car) | Full INSEE profile of a catchment area |
+| `comparer_emplacements` | `adresses` (2–10), `minutes` (10) | Compare locations, ranked on exclusive population |
+| `potentiel_commerce` | `adresse`, `secteur`, `minutes` (10), `coefficient` | Estimated disposable income and sector spending potential |
+| `verifier_adresses` | `adresses` | Verify a list of addresses, one call each |
+| `qualifier_entreprise` | `nom_ou_siret` | Find a company in SIRENE and open its full record |
+
+Prompt names and wording are French, like the data they describe. A prompt
+returns a message, not a result: it calls no tool by itself and consumes no
+quota — the tool it points at applies its own plan requirement when the
+assistant calls it.
+
 ## Connect
 
 ### Claude (claude.ai / Claude Desktop)
@@ -102,7 +121,9 @@ Don't have an account yet? Start free on
 **[trustydata.fr](https://trustydata.fr)** — the Discovery plan is free
 (5,000 requests/month, no card required).
 
-## Example prompts
+## Example prompts (free-form)
+
+No prompt needed — just ask:
 
 ```
 Vérifie et normalise cette adresse : "1 rue de Rivol 75001 Pari"
