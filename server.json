@@ -3,7 +3,7 @@
   "name": "app.trustydata/trustydata",
   "title": "TrustyData",
   "description": "French address quality, geocoding, routing, company lookup & catchment stats (BAN, INSEE, OSM).",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "websiteUrl": "https://trustydata.fr",
   "repository": {
     "url": "https://github.com/htristram/trustydata-mcp-server",

@@ -24,5 +24,5 @@ whether the listing appeared automatically before submitting manually.
 > INSEE codes" and get answers grounded in official French open data. TrustyData
 > exposes 11 tools and 5 guided prompts — verify, autocomplete, locality search, proximity, routing,
 > territorial enrichment, company lookup (SIRENE) and catchment-area statistics
-> (INSEE) — through a single hosted MCP endpoint. No local
+> (INSEE, plus DVF real-estate sale prices) — through a single hosted MCP endpoint. No local
 > install: connect via URL + OAuth in two minutes.

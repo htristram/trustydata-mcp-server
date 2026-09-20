@@ -34,11 +34,12 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 > and communes by name / postal code / INSEE code, run proximity searches, and
 > compute road routes or travel-time/distance matrices in France. Look up French
 > companies and establishments in the SIRENE registry, and measure a catchment
-> area — population, income, socio-professional profile, spending potential of a
+> area — population, income, socio-professional profile, spending potential and
+> DVF real-estate sale prices of a
 > drive-time or radius zone — or compare up to ten of them. Data comes from
 > official, regularly-updated open sources — BAN and INSEE for addresses and
 > communes, SIRENE (INSEE) and RNE (INPI) for companies, INSEE Filosofi and
-> census plus IGN contours for catchment areas, OpenStreetMap (ODbL) for routing. Results are authoritative: an empty
+> census plus IGN contours for catchment areas, DGFiP DVF for real-estate prices, OpenStreetMap (ODbL) for routing. Results are authoritative: an empty
 > result means no match, never a guess.
 
 **Tags / categories**
@@ -61,8 +62,8 @@ ban, insee, openstreetmap, sirene, company-data, catchment-area
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
-| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential of a catchment area (drive time or radius) | Growth |
-| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking | Growth |
+| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential and DVF real-estate sale prices (5-year trend, vs. département) of a catchment area (drive time or radius) | Growth |
+| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices included | Growth |
 
 **Example prompts**
 

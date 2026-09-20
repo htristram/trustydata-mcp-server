@@ -67,8 +67,8 @@ returned depending on your plan.
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
-| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential of a catchment area (drive time or radius) | Growth |
-| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking | Growth |
+| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential and DVF real-estate sale prices (5-year trend, vs. département) of a catchment area (drive time or radius) | Growth |
+| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices included | Growth |
 
 All tools are advertised to every client. If your plan doesn't cover a tool, it
 returns an actionable upgrade message instead of failing silently.
@@ -81,7 +81,7 @@ the right parameters for you. In Claude Code they show up as
 
 | Prompt | Arguments | What it does |
 |---|---|---|
-| `zone_de_chalandise` | `adresse`, `minutes` (10), `mode` (car) | Full INSEE profile of a catchment area |
+| `zone_de_chalandise` | `adresse`, `minutes` (10), `mode` (car) | Full INSEE profile of a catchment area, with real-estate sale prices |
 | `comparer_emplacements` | `adresses` (2–10), `minutes` (10) | Compare locations, ranked on exclusive population |
 | `potentiel_commerce` | `adresse`, `secteur`, `minutes` (10), `coefficient` | Estimated disposable income and sector spending potential |
 | `verifier_adresses` | `adresses` | Verify a list of addresses, one call each |
