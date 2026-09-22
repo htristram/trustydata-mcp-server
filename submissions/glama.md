@@ -32,7 +32,7 @@ public status page, OAuth).
 > against the official BAN registry, geocoding (WGS84/Lambert 93), INSEE
 > territorial enrichment, proximity search, road routing, company lookup in the
 > official SIRENE registry and catchment-area statistics (INSEE, plus DVF
-> real-estate sale prices). Results are
+> real-estate sale prices and establishment counts by activity). Results are
 > authoritative: an empty result means no match, never a guess. Free tier
 > available (5,000 requests/month).
 

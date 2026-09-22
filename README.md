@@ -50,6 +50,11 @@ geographic context, directly inside your LLM conversation:
   socio-professional profile, spending potential of a drive-time or radius zone
   (**INSEE** Filosofi & census); compare up to 10 zones and measure what each
   one covers exclusively.
+- **Activity mix** — how many **SIRENE** establishments a catchment area holds,
+  by family and sub-family of activity, with a density per 10,000 inhabitants
+  and an index against the reference département. A floor, never a total: only
+  active, geolocated establishments are counted, and the response says what
+  share of the département that represents.
 
 Richer fields (e.g. INSEE Filosofi statistical grid, Lambert 93 coordinates) are
 returned depending on your plan.
@@ -67,8 +72,8 @@ returned depending on your plan.
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
-| `zone_stats` | Population, households, income, age & socio-professional profile, spending potential and DVF real-estate sale prices (5-year trend, vs. département) of a catchment area (drive time or radius) | Growth |
-| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices included | Growth |
+| `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. département) | Growth |
+| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included | Growth |
 
 All tools are advertised to every client. If your plan doesn't cover a tool, it
 returns an actionable upgrade message instead of failing silently.
@@ -81,7 +86,7 @@ the right parameters for you. In Claude Code they show up as
 
 | Prompt | Arguments | What it does |
 |---|---|---|
-| `zone_de_chalandise` | `adresse`, `minutes` (10), `mode` (car) | Full INSEE profile of a catchment area, with real-estate sale prices |
+| `zone_de_chalandise` | `adresse`, `minutes` (10), `mode` (car) | Full INSEE profile of a catchment area, with real-estate sale prices and activity counts |
 | `comparer_emplacements` | `adresses` (2–10), `minutes` (10) | Compare locations, ranked on exclusive population |
 | `potentiel_commerce` | `adresse`, `secteur`, `minutes` (10), `coefficient` | Estimated disposable income and sector spending potential |
 | `verifier_adresses` | `adresses` | Verify a list of addresses, one call each |
@@ -139,6 +144,8 @@ Trouve les entreprises de plomberie à Annecy et donne-moi la fiche du premier �
 Combien de personnes habitent à 15 minutes en voiture du 1 rue Scribe, 75009 Paris, et quel est leur niveau de vie ?
 
 Compare 10 minutes en voiture autour de la Part-Dieu et autour de Bellecour : quelle zone capte le plus d'habitants qu'elle est seule à couvrir ?
+
+Combien d'établissements de restauration y a-t-il à 10 minutes à pied de la place Bellecour, et est-ce beaucoup pour le nombre d'habitants ?
 ```
 
 ## Data sources & attribution
@@ -149,6 +156,8 @@ attributions returned by the tools:
 - **Addresses & communes** — Base Adresse Nationale (BAN) & INSEE
 - **Companies** — SIRENE (INSEE), Registre National des Entreprises (INPI)
 - **Statistical context & catchment areas** — INSEE Filosofi and census, IGN Contours IRIS
+- **Real-estate sale prices** — DGFiP, Demandes de valeurs foncières (Etalab, open licence)
+- **Establishments by activity** — SIRENE (INSEE), active geolocated establishments only
 - **Routing** — OpenStreetMap contributors (ODbL)
 
 ## Documentation

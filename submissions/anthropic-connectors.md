@@ -22,7 +22,8 @@ check the current process in Anthropic's developer docs.
 > INSEE, IGN, OpenStreetMap) : vérification d'adresse, coordonnées GPS, code
 > IRIS, données socio-démographiques de quartier, itinéraires routiers, recherche
 > d'entreprises (SIRENE) et statistiques de zone de chalandise (population,
-> revenus, profil, potentiel de dépense, prix de vente immobiliers (DVF)). Aucun
+> revenus, profil, potentiel de dépense, prix de vente immobiliers (DVF),
+> établissements par activité (SIRENE)). Aucun
 > code à écrire — connectez-vous et posez votre question. Plan gratuit : 5 000
 > requêtes/mois.
 
@@ -33,7 +34,8 @@ check the current process in Anthropic's developer docs.
 > IGN, OpenStreetMap): address verification, GPS coordinates, INSEE territorial
 > codes, neighborhood-level demographics, road routing, company lookup (SIRENE)
 > and catchment-area statistics (population, income, profile, spending
-> potential, real-estate sale prices (DVF)). No code required —
+> potential, real-estate sale prices (DVF), establishment counts by activity
+> (SIRENE)). No code required —
 > sign in and ask. Free plan: 5,000 requests/month.
 
 ## Example prompts to include

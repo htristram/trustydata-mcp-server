@@ -25,7 +25,8 @@ Target: **mcp.so** — high-traffic community directory of MCP servers.
 > (26M+ addresses), returns GPS coordinates, INSEE codes and neighborhood-level
 > socio-demographics, computes real road routes, looks up companies in the
 > official SIRENE registry and measures catchment areas (population, income,
-> spending potential, real-estate sale prices (DVF)). One remote server, OAuth
+> spending potential, real-estate sale prices (DVF), establishments by
+> activity). One remote server, OAuth
 > sign-in, free tier — works with Claude, ChatGPT (developer mode) and any MCP
 > client.
 
