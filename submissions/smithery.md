@@ -63,7 +63,7 @@ ban, insee, openstreetmap, sirene, company-data, catchment-area
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
-| `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. département) | Growth |
+| `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département) | Growth |
 | `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included | Growth |
 
 **Example prompts**
