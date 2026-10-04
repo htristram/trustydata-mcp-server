@@ -4,8 +4,10 @@ Target: **apitracker.io** — MCP directory with an API-first audience.
 
 ## Steps
 
-1. Go to https://apitracker.io and find the MCP directory submit form.
-2. Fill the metadata below.
+1. There is no submit form on apitracker.io (the only form is a Tally beta
+   waitlist, which does not create a listing). The directory is curated by
+   Apideck: request a listing by email at `apitracker@apideck.com`.
+2. Include the metadata below in the message.
 
 ## Listing metadata
 

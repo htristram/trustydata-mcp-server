@@ -4,10 +4,14 @@ Target: **pulsemcp.com**. PulseMCP indexes the official MCP registry — after
 publishing there (see [`official-registry.md`](./official-registry.md)), check
 whether the listing appeared automatically before submitting manually.
 
-## Steps (manual fallback)
+## Steps
 
-1. Go to https://www.pulsemcp.com and find the submit form.
-2. Fill the metadata below.
+1. Check https://www.pulsemcp.com/submit. As of 2026-10-04 (page dated
+   2026-09-03) submissions are paused while PulseMCP overhauls its directory
+   pipeline; the page asks to publish to the Official MCP Registry, from which
+   listings will be picked up automatically once it reopens. Nothing else to
+   do in the meantime.
+2. If the page offers a form again, fill the metadata below.
 
 ## Listing metadata
 
