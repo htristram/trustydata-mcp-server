@@ -56,6 +56,13 @@ geographic context, directly inside your LLM conversation:
   dominant département when you ask for it. A floor, never a total: only
   active, geolocated establishments are counted, and the response says which
   reference was used and what share of it that count represents.
+- **Business failures** — collective procedures published in the BODACC
+  (liquidation, receivership, safeguard), counted on every establishment of
+  the company located in the area, and activity stops (SIRENE closures that
+  are neither a takeover at the same address nor a relocation), by year since
+  2017 and by activity, with a rate per 100 active establishments and an
+  index against the reference territory. Procedures are a floor, stops a
+  ceiling, and the current year is partial — the response says so.
 
 Richer fields (e.g. INSEE Filosofi statistical grid, Lambert 93 coordinates) are
 returned depending on your plan.
@@ -73,8 +80,8 @@ returned depending on your plan.
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
-| `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département) | Growth |
-| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included | Growth |
+| `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département), business failures and activity stops since 2017 (BODACC + SIRENE) | Growth |
+| `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included, business failures and activity stops since 2017 (BODACC + SIRENE) | Growth |
 
 All tools are advertised to every client. If your plan doesn't cover a tool, it
 returns an actionable upgrade message instead of failing silently.
@@ -159,6 +166,7 @@ attributions returned by the tools:
 - **Statistical context & catchment areas** — INSEE Filosofi and census, IGN Contours IRIS
 - **Real-estate sale prices** — DGFiP, Demandes de valeurs foncières (Etalab, open licence)
 - **Establishments by activity** — SIRENE (INSEE), active geolocated establishments only
+- **Business failures** — BODACC (DILA) and SIRENE (INSEE), geolocated establishments only
 - **Routing** — OpenStreetMap contributors (ODbL)
 
 ## Documentation
