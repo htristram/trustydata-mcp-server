@@ -35,7 +35,7 @@ check the current process in Anthropic's developer docs.
 > codes, neighborhood-level demographics, road routing, company lookup (SIRENE)
 > and catchment-area statistics (population, income, profile, spending
 > potential, real-estate sale prices (DVF), establishment counts by activity
-> (SIRENE)). No code required —
+> (SIRENE), business failures since 2017 (BODACC)). No code required —
 > sign in and ask. Free plan: 5,000 requests/month.
 
 ## Example prompts to include

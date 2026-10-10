@@ -4,3 +4,6 @@
 
 # Clé privée d'auth registre MCP — ne jamais committer
 key.pem
+
+# Espace de travail des plans superpowers (paquets de revue, jamais versionnés)
+.superpowers/

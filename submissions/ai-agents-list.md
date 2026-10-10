@@ -24,5 +24,5 @@ agent listings.
 > a shipping address before a delivery step, geocode a lead before territory
 > assignment, pull neighborhood demographics before a market analysis, check a supplier in
 > the SIRENE registry, or size a catchment area — its residents and the
-> establishments already trading there, by activity — before a site decision — all
+> establishments already trading there, by activity, and the business failures there since 2017 — before a site decision — all
 > from official sources, with per-plan quotas and OAuth-scoped access.
