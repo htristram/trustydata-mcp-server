@@ -25,4 +25,4 @@ Target: **apitracker.io** — MCP directory with an API-first audience.
 > establishment counts by activity (SIRENE) and business failures (BODACC), exposed natively over MCP.
 > Same endpoints, same official data (BAN/INSEE/IGN/OSM), two access modes:
 > REST for production pipelines, MCP for LLM-driven exploration and one-off
-> enrichment. Transparent pricing from €0 to €149/month, no lock-in.
+> enrichment. Transparent pricing from €0 to €149/month, plus a 15-day €30 excl. VAT Pass Zones, no lock-in.
