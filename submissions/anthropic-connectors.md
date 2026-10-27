@@ -24,8 +24,9 @@ check the current process in Anthropic's developer docs.
 > d'entreprises (SIRENE) et statistiques de zone de chalandise (population,
 > revenus, profil, potentiel de dépense, prix de vente immobiliers (DVF),
 > établissements par activité (SIRENE)). Aucun
-> code à écrire — connectez-vous et posez votre question. Plan gratuit : 5 000
-> requêtes/mois.
+> code à écrire — connectez-vous et posez votre question. Plan gratuit : 20 000
+> requêtes/mois ; les outils de zone de chalandise s'ouvrent aussi avec le Pass Zones
+> (15 jours, 30 € HT).
 
 ## Listing copy — EN
 
@@ -36,7 +37,8 @@ check the current process in Anthropic's developer docs.
 > and catchment-area statistics (population, income, profile, spending
 > potential, real-estate sale prices (DVF), establishment counts by activity
 > (SIRENE), business failures since 2017 (BODACC)). No code required —
-> sign in and ask. Free plan: 5,000 requests/month.
+> sign in and ask. Free plan: 20,000 requests/month; the catchment-area tools also open with the
+> Pass Zones (15 days, €30 excl. VAT).
 
 ## Example prompts to include
 

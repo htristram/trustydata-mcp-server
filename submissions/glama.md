@@ -34,6 +34,6 @@ public status page, OAuth).
 > official SIRENE registry and catchment-area statistics (INSEE, plus DVF
 > real-estate sale prices and establishment counts by activity and business failures). Results are
 > authoritative: an empty result means no match, never a guess. Free tier
-> available (5,000 requests/month).
+> available (20,000 requests/month).
 
 **Tags**: `address-validation, geocoding, france, routing, data-quality, ban, insee, openstreetmap, sirene, company-data, catchment-area`
