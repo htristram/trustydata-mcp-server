@@ -53,7 +53,8 @@
         "composerIconDark": "./assets/icon-dark.png",
         "logo": "./assets/logo.png",
         "logoDark": "./assets/logo-dark.png"
-      }
+      },
+      "onboardingSkill": "./skills/get-started/SKILL.md"
     }
   }
 }
