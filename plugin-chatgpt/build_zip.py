@@ -19,7 +19,19 @@ from pathlib import Path
 
 AUTORISES = ("plugin.json", "mcp.json", "skills/", "assets/")
 IGNORES = ("schemas/", "build_zip.py", "dist/", "__pycache__/")
-SECRETS = (r"sk-[A-Za-z0-9]{20,}", r"tdp_live_", r"client_secret", r"skc_", r"Bearer ")
+# Formats réels : clés secrètes TrustyData (td_live_, td_staging_, td_test_),
+# clés OpenAI (sk-proj-…) et Anthropic (sk-ant-…), secrets Scalekit (skc_),
+# et les trois champs que le portail OpenAI refuse dans un paquet. `Bearer `
+# est volontairement large : une phrase de doc qui le contient fait échouer
+# le build, et c'est dit dans le message.
+SECRETS = (r"td_(live|staging|test)_[A-Za-z0-9_-]{8,}", r"sk-(proj-|ant-)?[A-Za-z0-9_-]{20,}",
+           r"tdp_live_", r"(?i)client_?secret", r"(?i)test_credentials", r"(?i)reviewer_instructions",
+           r"skc_", r"Bearer ")
+# Clés refusées une fois les manifestes chargés, quelle que soit leur casse
+# dans le texte : un serveur MCP n'a ni en-têtes ni secret client, une revue
+# n'a ni identifiants ni consignes pour le relecteur (formulaire du portail).
+CLES_INTERDITES_MCP = ("headers", "clientSecret")
+CLES_INTERDITES_REVUE = ("test_credentials", "reviewer_instructions")
 TEXTE = {".json", ".md", ".txt", ".svg", ".yaml", ".yml"}
 # Dans les deux dossiers, seule la forme attendue passe : une skill est
 # `skills/<nom>/SKILL.md` avec ses sous-dossiers de convention, une icône est
@@ -56,7 +68,8 @@ def _fichiers(racine: Path) -> list[Path]:
             texte = chemin.read_text(encoding="utf-8", errors="replace")
             for motif in SECRETS:
                 if re.search(motif, texte):
-                    _refuser(f"secret probable ({motif}) dans {rel}")
+                    _refuser(f"secret probable ({motif}) dans {rel} ; reformuler le texte, "
+                             "le constructeur ne fait pas d'exception")
         retenus.append(chemin)
     return retenus
 
@@ -66,6 +79,15 @@ def construire(racine: Path, sortie: Path, video_url: str | None) -> Path:
     racine, sortie = Path(racine), Path(sortie)
     fichiers = _fichiers(racine)
     manifeste = json.loads((racine / "plugin.json").read_text(encoding="utf-8"))
+    mcp = json.loads((racine / "mcp.json").read_text(encoding="utf-8"))
+    for nom, serveur in mcp.get("mcpServers", {}).items():
+        for cle in CLES_INTERDITES_MCP:
+            if cle in serveur:
+                _refuser(f"mcp.json : clé `{cle}` interdite sur le serveur {nom}")
+    revue = manifeste.get("extensions", {}).get("com.openai", {}).get("review", {})
+    for cle in CLES_INTERDITES_REVUE:
+        if cle in revue:
+            _refuser(f"plugin.json : clé `{cle}` interdite dans review (formulaire du portail)")
     if video_url:
         manifeste["extensions"]["com.openai"].setdefault("review", {})["demo_recording_url"] = video_url
     sortie.mkdir(parents=True, exist_ok=True)

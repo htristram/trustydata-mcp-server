@@ -82,3 +82,11 @@ def test_les_icones_sont_carrees_et_declarees(interface):
         assert entete[:8] == b"\x89PNG\r\n\x1a\n"
         largeur, hauteur = struct.unpack(">II", entete[16:24])
         assert largeur == hauteur >= 48
+
+
+def test_les_icones_ont_un_fond_transparent_hors_de_la_pastille(interface):
+    from PIL import Image
+    for cle in ("logo", "composerIcon", "logoDark", "composerIconDark"):
+        image = Image.open(RACINE / interface[cle]).convert("RGBA")
+        assert image.getpixel((0, 0))[3] == 0, f"{cle} : coin opaque, fond blanc aplati"
+        assert image.getpixel((image.width // 2, 40))[:3] == (0x2D, 0x7B, 0xE5), f"{cle} : pastille bleue sous le visage"

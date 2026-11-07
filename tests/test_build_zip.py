@@ -45,3 +45,45 @@ def test_un_fichier_etranger_ou_un_secret_fait_echouer(tmp_path):
 def test_le_nom_du_zip_porte_la_version(tmp_path):
     version = json.loads((RACINE / "plugin.json").read_text(encoding="utf-8"))["version"]
     assert build_zip.construire(RACINE, tmp_path, None).name == f"trustydata-plugin-{version}.zip"
+
+
+def _paquet(tmp_path):
+    copie = tmp_path / "paquet"
+    shutil.copytree(RACINE, copie)
+    return copie
+
+
+@pytest.mark.parametrize("secret", [
+    "td_live_AbCdEfGhIjKlMnOpQrSt",
+    "td_staging_AbCdEfGhIjKlMnOp",
+    "sk-proj-AbCdEfGhIjKlMnOpQrStUvWxYz",
+    "sk-ant-api03-AbCdEfGhIjKlMnOpQrStUv",
+    "clientSecret",
+    "test_credentials",
+    "reviewer_instructions",
+])
+def test_les_vrais_formats_de_secrets_font_echouer(tmp_path, secret):
+    copie = _paquet(tmp_path)
+    skill = copie / "skills" / "get-started" / "SKILL.md"
+    skill.write_text(skill.read_text(encoding="utf-8") + f"\n{secret}\n", encoding="utf-8")
+    with pytest.raises(SystemExit):
+        build_zip.construire(copie, tmp_path, video_url=None)
+
+
+@pytest.mark.parametrize("cle, fichier", [
+    ("headers", "mcp.json"),
+    ("clientSecret", "mcp.json"),
+    ("test_credentials", "plugin.json"),
+    ("reviewer_instructions", "plugin.json"),
+])
+def test_une_cle_interdite_dans_un_manifeste_fait_echouer(tmp_path, cle, fichier):
+    copie = _paquet(tmp_path)
+    chemin = copie / fichier
+    contenu = json.loads(chemin.read_text(encoding="utf-8"))
+    if fichier == "mcp.json":
+        contenu["mcpServers"]["trustydata"][cle] = {"X": "y"} if cle == "headers" else "s"
+    else:
+        contenu["extensions"]["com.openai"].setdefault("review", {})[cle] = "s"
+    chemin.write_text(json.dumps(contenu), encoding="utf-8")
+    with pytest.raises(SystemExit):
+        build_zip.construire(copie, tmp_path, video_url=None)
