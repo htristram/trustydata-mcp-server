@@ -11,3 +11,4 @@ key.pem
 # Environnement de dev des tests et ZIP construits du plugin ChatGPT
 .venv/
 dist/
+__pycache__/
