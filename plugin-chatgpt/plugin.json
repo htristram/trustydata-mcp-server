@@ -1,0 +1,59 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "trustydata",
+  "version": "1.0.0",
+  "description": "Official French data in ChatGPT: verify addresses, find communes and companies, profile catchment areas and compute road travel times.",
+  "author": {
+    "name": "TrustyData",
+    "email": "contact@trustydata.fr",
+    "url": "https://trustydata.fr"
+  },
+  "homepage": "https://trustydata.fr/zone-de-chalandise-chatgpt-claude",
+  "repository": "https://github.com/htristram/trustydata-mcp-server",
+  "license": "MIT",
+  "keywords": [
+    "france",
+    "address",
+    "geocoding",
+    "ban",
+    "insee",
+    "sirene",
+    "siret",
+    "catchment-area",
+    "isochrone",
+    "routing"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "TrustyData",
+        "shortDescription": "French addresses, firms, zones",
+        "longDescription": "TrustyData connects ChatGPT to official French data: postal addresses, communes, companies and establishments, catchment areas and road travel times. Every answer comes from a public reference maintained by a French institution, never from the model's memory: an empty result means that nothing matches.\n\nWhat you can ask\n- Addresses: verify and normalize a French postal address against the BAN (Base Adresse Nationale), search addresses by text, get the full record of an address (coordinates, INSEE code, IRIS statistical district), and list addresses around a point.\n- Communes: find a commune by name, postal code or INSEE code, with its department, region and population.\n- Companies: search the SIRENE registry (INSEE) by name, SIREN, SIRET, activity or location. Each result is an establishment (one SIRET). The full record adds the legal unit, activity codes, workforce bracket, collective agreement, collective procedures from the BODACC, and the executives recorded by the INPI, each with the opposition_prospection flag that says whether that person refused commercial solicitation.\n- Catchment areas: describe a zone by travel time (car, on foot, by bike) or by radius around an address, and get its INSEE profile: population, households, average income, age and socio-professional structure, spending potential, real-estate sale prices over five years (DVF), establishment counts by activity, business failures and activity stops since 2017. Compare two to ten zones at once: exclusive population, overlaps, ranking.\n- Routes: compute a road route between two points, or a travel-time and distance matrix between several points, in France (OpenStreetMap).\n\nSources\nBAN and IGN for addresses and IRIS contours; INSEE for communes, the Filosofi grid and the census; SIRENE (INSEE), INPI and BODACC for companies; DVF for sale prices; OpenStreetMap for routes and isochrones.\n\nPlans\nSign in with your TrustyData account. The free Discovery plan covers addresses, communes and companies. Catchment areas need the Growth or Business plan, or a 15-day Pass Zones. Route computation needs the Business plan; proximity search and travel-time matrices start with Growth. A field missing from an answer may belong to a higher plan rather than not exist.\n\nLimits\n- France only, overseas departments included. An address outside France returns no result.\n- One address per call: verification is unitary, not a file processing service.\n- Executives are personal data from the INPI register: their names are never a search criterion, and the plugin does not build prospecting lists from them.\n- Catchment-area statistics describe the INSEE grid around a point, not the occupants of a given building.\n\nDocumentation: https://trustydata.fr/docs/",
+        "developerName": "TrustyData",
+        "category": "Research & Analysis",
+        "capabilities": [
+          "Verify and normalize French postal addresses against the BAN",
+          "Find French communes by name, postal code or INSEE code",
+          "Search French companies and establishments in the SIRENE registry",
+          "Profile and compare catchment areas with INSEE statistics",
+          "Compute road routes and travel-time matrices in France"
+        ],
+        "websiteURL": "https://trustydata.fr/zone-de-chalandise-chatgpt-claude",
+        "supportURL": "https://trustydata.fr/contact",
+        "privacyPolicyURL": "https://trustydata.fr/politique-confidentialite",
+        "termsOfServiceURL": "https://trustydata.fr/cgu",
+        "defaultPrompt": [
+          "Profile the catchment area 15 minutes by car from 20 avenue de Ségur, Paris.",
+          "Verify the address 20 av de segur paris and give me its INSEE code.",
+          "Find the SIRET of the Mairie de Lyon."
+        ],
+        "brandColor": "#2D7BE5",
+        "brandColorDark": "#8CB4FF",
+        "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon-dark.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo-dark.png"
+      }
+    }
+  }
+}
