@@ -46,5 +46,7 @@ def test_pas_de_commerce_ni_de_video_dans_le_depot():
 def test_la_traduction_francaise():
     fr = _openai()["publication"]["translations"]["fr-FR"]
     assert fr["subtitle"] == "Adresses, entreprises, zones" and len(fr["subtitle"]) <= 30
-    assert 200 <= len(fr["description"]) <= 4000 and "Pass Zones" in fr["description"]
+    # Plus de nom de plan dans la fiche (finding du portail, 2026-11-08) : la
+    # traduction porte le même rappel que l'anglais, l'accès dépend du compte.
+    assert 200 <= len(fr["description"]) <= 4000 and "app.trustydata.app" in fr["description"]
     assert "countries" not in _openai()["publication"]

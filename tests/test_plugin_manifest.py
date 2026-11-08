@@ -25,8 +25,13 @@ def manifeste():
 
 
 @pytest.fixture(scope="module")
-def interface(manifeste):
-    return manifeste["extensions"]["com.openai"]["interface"]
+def openai(manifeste):
+    return manifeste["extensions"]["com.openai"]
+
+
+@pytest.fixture(scope="module")
+def interface(openai):
+    return openai["interface"]
 
 
 def test_le_manifeste_respecte_le_schema_agent_plugins(manifeste):
@@ -50,11 +55,47 @@ def test_les_limites_de_la_fiche(interface):
     assert interface["category"]
 
 
-def test_la_fiche_dit_les_plans_et_les_sources(interface):
+def test_la_fiche_nomme_les_sources(interface):
     texte = interface["longDescription"]
-    for mot in ("Discovery", "Growth", "Business", "Pass Zones", "BAN", "INSEE", "SIRENE", "France"):
+    for mot in ("BAN", "INSEE", "SIRENE", "INPI", "OpenStreetMap", "France"):
         assert mot in texte
     assert "opposition_prospection" in texte
+
+
+# Finding du portail OpenAI (2026-11-08, non bloquant) : « Remove pricing,
+# subscription offers, and temporary promotions from the description ». Les
+# plans se lisent sur le site, la fiche dit seulement que l'accès dépend du compte.
+VENTE = [r"\bDiscovery\b", r"\bGrowth\b", r"\bBusiness plan\b", r"plan Business", r"\bPass Zones\b",
+         r"\bfree\b", r"\bgratuit", r"\b15[- ]day", r"\b15 jours", r"subscription", r"abonnement", r"€"]
+
+# Finding du portail (même jour) : « Remove or revise promises and guarantees
+# that the plugin's functionality does not support ». Comportements non prouvés
+# ou faux (OSM n'est pas une institution française), et le mot « normaliser »
+# qui frôle l'interdit RNVP.
+PROMESSES = [r"returns no result", r"ne rend aucun r[ée]sultat", r"model's memory", r"m[ée]moire du mod[èe]le",
+             r"\bnormali[sz]e", r"French institution", r"institution fran[çc]aise"]
+
+
+def _textes_de_la_fiche(openai):
+    inter, pub = openai["interface"], openai["publication"]
+    yield "longDescription", inter["longDescription"]
+    yield "shortDescription", inter["shortDescription"]
+    yield "capabilities", "\n".join(inter["capabilities"])
+    for langue, tr in pub["translations"].items():
+        yield f"{langue}.description", tr["description"]
+        yield f"{langue}.subtitle", tr["subtitle"]
+
+
+@pytest.mark.parametrize("motif", VENTE)
+def test_la_fiche_ne_vend_aucun_plan(openai, motif):
+    for nom, texte in _textes_de_la_fiche(openai):
+        assert not re.search(motif, texte), f"{motif!r} dans {nom}"
+
+
+@pytest.mark.parametrize("motif", PROMESSES)
+def test_la_fiche_ne_promet_rien_d_invérifiable(openai, motif):
+    for nom, texte in _textes_de_la_fiche(openai):
+        assert not re.search(motif, texte, re.IGNORECASE), f"{motif!r} dans {nom}"
 
 
 def test_aucun_terme_interdit():

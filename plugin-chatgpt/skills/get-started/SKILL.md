@@ -21,12 +21,12 @@ The plugin uses the TrustyData account you signed in with. Create one at https:/
 
 | Plan | What it opens |
 |---|---|
-| Discovery (free) | Addresses, communes, companies |
+| Discovery | Addresses, communes, companies |
 | Growth | Discovery, plus catchment areas, proximity search and travel-time matrices |
 | Business | Growth, plus full road routes |
-| Pass Zones | Catchment areas for 15 days, bought once on https://app.trustydata.app |
+| Pass Zones | Catchment areas, for a limited period |
 
-A field missing from an answer may belong to a higher plan rather than not exist: say so instead of concluding that the data does not exist. Prompts cost nothing; tool calls count against the account's monthly quota.
+A field missing from an answer may belong to a higher plan rather than not exist: say so instead of concluding that the data does not exist. Prompts cost nothing; tool calls count against the account's quota.
 
 ## Recipes
 
