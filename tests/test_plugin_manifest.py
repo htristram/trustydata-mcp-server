@@ -50,7 +50,13 @@ def test_la_configuration_mcp_pointe_le_seul_serveur_de_production():
     mcp = json.loads((RACINE / "mcp.json").read_text(encoding="utf-8"))
     assert list(mcp["mcpServers"]) == ["trustydata"]
     serveur = mcp["mcpServers"]["trustydata"]
-    assert serveur == {"type": "streamable-http", "url": "https://mcp.trustydata.app/mcp"}, "ni headers ni secret"
+    assert set(serveur) == {"type", "url", "extensions"}, "ni headers ni secret"
+    assert serveur["type"] == "streamable-http" and serveur["url"] == "https://mcp.trustydata.app/mcp"
+    # Déclaration d'authentification propre à OpenAI (developers.openai.com/plugins/build/plugins,
+    # « Declare authentication under each server's extensions["com.openai"].auth object ») :
+    # sans elle, ChatGPT installe le plugin comme un serveur sans authentification et ne
+    # propose jamais la connexion (constaté le 2026-11-08). DCR : le mode prouvé avec Scalekit.
+    assert serveur["extensions"] == {"com.openai": {"auth": {"type": "oauth", "client": {"mode": "dcr"}}}}
 
 
 def test_les_limites_de_la_fiche(interface):

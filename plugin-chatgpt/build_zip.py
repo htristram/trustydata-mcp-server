@@ -47,6 +47,17 @@ def _relatif(chemin: Path, racine: Path) -> str:
     return chemin.relative_to(racine).as_posix()
 
 
+def _cles_imbriquees(objet):
+    """Toutes les clés d'un objet JSON, à toute profondeur."""
+    if isinstance(objet, dict):
+        for cle, valeur in objet.items():
+            yield cle
+            yield from _cles_imbriquees(valeur)
+    elif isinstance(objet, list):
+        for element in objet:
+            yield from _cles_imbriquees(element)
+
+
 def _refuser(message: str) -> None:
     print(f"build_zip: {message}", file=sys.stderr)
     sys.exit(2)
@@ -81,8 +92,10 @@ def construire(racine: Path, sortie: Path, video_url: str | None) -> Path:
     manifeste = json.loads((racine / "plugin.json").read_text(encoding="utf-8"))
     mcp = json.loads((racine / "mcp.json").read_text(encoding="utf-8"))
     for nom, serveur in mcp.get("mcpServers", {}).items():
-        for cle in CLES_INTERDITES_MCP:
-            if cle in serveur:
+        # Récursif : le bloc `extensions.com.openai.auth` d'OpenAI pourrait
+        # porter un `clientSecret` (mode `provided`), à n'importe quelle profondeur.
+        for cle in _cles_imbriquees(serveur):
+            if cle in CLES_INTERDITES_MCP:
                 _refuser(f"mcp.json : clé `{cle}` interdite sur le serveur {nom}")
     revue = manifeste.get("extensions", {}).get("com.openai", {}).get("review", {})
     for cle in CLES_INTERDITES_REVUE:

@@ -87,3 +87,18 @@ def test_une_cle_interdite_dans_un_manifeste_fait_echouer(tmp_path, cle, fichier
     chemin.write_text(json.dumps(contenu), encoding="utf-8")
     with pytest.raises(SystemExit):
         build_zip.construire(copie, tmp_path, video_url=None)
+
+
+def test_une_cle_interdite_imbriquee_dans_le_bloc_auth_fait_echouer(tmp_path):
+    """Le bloc `extensions.com.openai.auth` d'OpenAI ouvre une profondeur où une
+    clé interdite peut se glisser. `headers` est choisi parce que la chasse aux
+    secrets par texte ne le voit pas (un `clientSecret`, elle, l'attrape déjà) :
+    seul le parcours récursif des clés du serveur peut refuser ce paquet."""
+    copie = _paquet(tmp_path)
+    chemin = copie / "mcp.json"
+    contenu = json.loads(chemin.read_text(encoding="utf-8"))
+    auth = contenu["mcpServers"]["trustydata"]["extensions"]["com.openai"]["auth"]
+    auth["headers"] = {"X-Trace": "y"}  # valeur neutre : rien que la regex des secrets attraperait
+    chemin.write_text(json.dumps(contenu), encoding="utf-8")
+    with pytest.raises(SystemExit):
+        build_zip.construire(copie, tmp_path, video_url=None)
