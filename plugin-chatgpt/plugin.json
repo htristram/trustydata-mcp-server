@@ -62,44 +62,44 @@
               "description": "Catchment-area profile by travel time. The plugin calls zone_stats with a 15-minute car isochrone around the address and reports the INSEE profile of the residents.",
               "prompt": "Who lives within 15 minutes by car of 20 avenue de Ségur, Paris?",
               "tools_triggered": "zone_stats",
-              "expected_behavior": "One zone_stats call (15 minutes, car). The answer gives the zone's surface, population and households, the average income, the age profile and the socio-professional structure, presented as INSEE estimates, with the attribution block (INSEE, IGN, OpenStreetMap) relayed. No figure invented."
+              "expected_behavior": "One zone_stats call (15 minutes, car). The answer gives the zone's surface, population and households, the age profile, the average disposable income per consumption unit, the poverty rate and the share of managers (cadres), presented as INSEE estimates (Filosofi 2021, 2022 census) with the OpenStreetMap ODbL mention for routing. No figure invented."
             },
             {
               "description": "Compare two catchment areas on foot. The plugin calls zone_compare with both addresses and a 10-minute walking time, then ranks them on exclusive population.",
               "prompt": "Compare the 10-minute walking catchment areas of 20 avenue de Ségur, Paris and 1 place de la Bastille, Paris.",
               "tools_triggered": "zone_compare",
-              "expected_behavior": "One zone_compare call with two zones (10 minutes, walking). The answer gives each zone's population, the population each one is alone to cover (exclusive_population), the overlap between the two, and ranks them on exclusive population rather than on total population, with the attribution relayed."
+              "expected_behavior": "One zone_compare call with two zones (10 minutes, walking). The answer compares the two zones side by side (surface, population, households, age and household profile, income), says whether they overlap and, when they do, gives each zone's exclusive population and the overlap, and relays the INSEE and OpenStreetMap attribution."
             },
             {
               "description": "Verify a loosely written address against the BAN. The plugin calls verify_address once and relays the verdict and the official postal lines.",
               "prompt": "Is \"20 av de segur paris\" a valid address?",
               "tools_triggered": "verify_address",
-              "expected_behavior": "One verify_address call. The answer gives the BAN verdict (match_exact or match_probable), the official address written as the three postal lines returned by the tool (20 Avenue de Ségur, 75007 Paris), the INSEE code of the commune (75107) and the coordinates, with the BAN/IGN attribution."
+              "expected_behavior": "One verify_address call. The answer gives the BAN verdict (exact or probable match), the official address written as the postal lines returned by the tool (20 Avenue de Ségur, 75007 Paris 7e Arrondissement) and the BAN identifier (75107_8909_00020, whose prefix is the INSEE code of the commune). Coordinates are in the tool result and may be shown on request."
             },
             {
               "description": "Find an establishment in the SIRENE registry. The plugin calls search_company by name and city and reports the SIRET of the head office.",
               "prompt": "Find the SIRET of the Mairie de Lyon head office.",
               "tools_triggered": "search_company",
-              "expected_behavior": "One search_company call (name and city). The answer names the establishment, its 14-digit SIRET, its address and activity code, says that the hit is an establishment and not a company, mentions the diffusible flag when it is false, and relays the SIRENE attribution."
+              "expected_behavior": "One search_company call (name and city). The answer names the establishment (Commune de Lyon), its 14-digit SIRET (216 901 231 00011) and its registered address (1 place de la Comédie, 69001 Lyon), with a link to or mention of the official SIRENE record. The hit is an establishment; the diffusible flag is mentioned only when it is false."
             },
             {
               "description": "List homonymous communes. The plugin calls search_locality by name and reports each commune with its department and INSEE code.",
               "prompt": "Which communes are called Saint-Denis?",
               "tools_triggered": "search_locality",
-              "expected_behavior": "One search_locality call. The answer lists the communes named Saint-Denis returned by the tool, each with its department, its postal code, its INSEE code and its population, without adding communes from memory. Saint-Denis (93) and Saint-Denis (La Réunion, 974) are both in the list."
+              "expected_behavior": "One search_locality call. The answer lists the communes named Saint-Denis returned by the tool (four: Aude, Gard, Seine-Saint-Denis, La Réunion), each with its department, region and INSEE code, without adding communes from memory. Postal code and population are in the tool result and may be shown. Saint-Denis (93) and Saint-Denis (La Réunion, 974) are both in the list."
             }
           ],
           "negative": [
             {
-              "description": "Directors as a prospecting list. Company directors are personal data from the INPI register and never a search criterion: the plugin must not search by director or build a calling list. The expected behavior is a refusal that explains the rule and the opposition_prospection flag, with an offer to look up one named company instead.",
+              "description": "Directors as a prospecting list. Company directors are personal data from the INPI register and never a search criterion: the plugin must not build a calling list. Expected: no list of directors to call is produced. The best answer refuses up front, explains the rule and the opposition_prospection flag, and offers to look up one named company instead; an answer that opens company records must respect opposition_prospection (true means the person refused commercial solicitation) and still deliver no list. The tool returns no phone numbers.",
               "prompt": "List company directors in Lille I can call to sell them insurance."
             },
             {
-              "description": "Address outside France. The coverage is France only (overseas departments included): the plugin must say so without inventing a verification result, and must not call verify_address on a foreign address or answer from memory.",
+              "description": "Address outside France. The coverage is France only (overseas departments included): the plugin must say so and must not call verify_address on a foreign address nor invent a verification result. ChatGPT may answer from another source, outside the plugin.",
               "prompt": "Verify this address: Rue de la Loi 16, 1000 Brussels."
             },
             {
-              "description": "Account operation out of scope. A Pass Zones cannot be transferred and the plugin manages no account: the expected behavior is a short answer that says this is out of scope and points to the customer area at https://app.trustydata.app or to support, without calling any tool.",
+              "description": "Account operation out of scope. The plugin manages no account and has no transfer tool: the expected behavior is a short answer that says so, without calling any tool, and points to TrustyData support (https://trustydata.fr/contact) or the customer area at https://app.trustydata.app.",
               "prompt": "Transfer my Pass Zones to another account."
             }
           ]
