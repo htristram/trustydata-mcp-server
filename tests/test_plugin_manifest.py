@@ -19,6 +19,13 @@ INTERDITS = [r"\btraffic\b", r"\btrafic\b", r"\bbulk\b", r"\bbatch\b", r"\bpar l
              r"\bb[êe]ta\b", r"niveau de vie m[ée]dian", r"median income"]
 
 
+# Menu déroulant « Category » du portail OpenAI, relevé le 2026-11-08 ; la liste
+# n'est publiée nulle part dans la documentation. Le portail bloque toute autre valeur.
+CATEGORIES_PORTAIL = {"Productivity", "Creativity", "Developer Tools", "Business & Operations",
+                      "Data & Analytics", "Communication", "Education & Research", "Security",
+                      "Finance", "Healthcare", "Travel", "Entertainment", "Other"}
+
+
 @pytest.fixture(scope="module")
 def manifeste():
     return json.loads((RACINE / "plugin.json").read_text(encoding="utf-8"))
@@ -52,7 +59,8 @@ def test_les_limites_de_la_fiche(interface):
     prompts = interface["defaultPrompt"]
     assert 1 <= len(prompts) <= 3 and all(len(p) <= 128 and "@" not in p for p in prompts)
     assert all(re.fullmatch(r"#[0-9A-Fa-f]{6}", interface[c]) for c in ("brandColor", "brandColorDark"))
-    assert interface["category"]
+    assert interface["category"] in CATEGORIES_PORTAIL
+    assert interface["category"] == "Data & Analytics"
 
 
 def test_la_fiche_nomme_les_sources(interface):
