@@ -50,3 +50,32 @@ def test_la_traduction_francaise():
     # traduction porte le même rappel que l'anglais, l'accès dépend du compte.
     assert 200 <= len(fr["description"]) <= 4000 and "app.trustydata.app" in fr["description"]
     assert "countries" not in _openai()["publication"]
+
+
+# --- Attendus alignés sur ce que ChatGPT fait réellement (banc du 2026-11-11) ---
+# Le relecteur compare la réponse à ces textes : on n'y promet que ce qui a été vu.
+
+def _cas(famille, mot):
+    (c,) = [c for c in _openai()["review"]["test_cases"][famille] if mot in c["prompt"]]
+    return c
+
+
+def test_l_identifiant_ban_n_est_pas_exige_dans_la_reponse():
+    attendu = _cas("positive", "valid address")["expected_behavior"]
+    assert "exact or probable match" in attendu and "75007 Paris" in attendu
+    phrase_id = [p for p in attendu.split(". ") if "75107_8909_00020" in p][0]
+    assert "on request" in phrase_id
+
+
+def test_le_cas_dirigeants_admet_une_liste_d_entreprises_sans_dirigeant():
+    description = _cas("negative", "directors in Lille")["description"]
+    assert "no director is named" in description.lower()
+    assert "companies with their published business phone" in description
+    assert "outside the plugin" in description
+
+
+def test_le_cas_pass_zones_n_exige_que_l_absence_d_outil_et_le_renvoi_au_support():
+    description = _cas("negative", "Pass Zones")["description"]
+    assert "without calling any TrustyData tool" in description
+    assert "may consult the public documentation" in description
+    assert "support" in description
