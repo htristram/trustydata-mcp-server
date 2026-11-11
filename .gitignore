@@ -7,3 +7,8 @@ key.pem
 
 # Espace de travail des plans superpowers (paquets de revue, jamais versionnés)
 .superpowers/
+
+# Environnement de dev des tests et ZIP construits du plugin ChatGPT
+.venv/
+dist/
+__pycache__/

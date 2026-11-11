@@ -1,0 +1,121 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "trustydata",
+  "version": "1.0.0",
+  "description": "Official French data in ChatGPT: verify addresses, find communes and companies, profile catchment areas and compute road travel times.",
+  "author": {
+    "name": "TrustyData",
+    "email": "contact@trustydata.fr",
+    "url": "https://trustydata.fr"
+  },
+  "homepage": "https://trustydata.fr/zone-de-chalandise-chatgpt-claude",
+  "repository": "https://github.com/htristram/trustydata-mcp-server",
+  "license": "MIT",
+  "keywords": [
+    "france",
+    "address",
+    "geocoding",
+    "ban",
+    "insee",
+    "sirene",
+    "siret",
+    "catchment-area",
+    "isochrone",
+    "routing"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "TrustyData",
+        "shortDescription": "French addresses, firms, zones",
+        "longDescription": "TrustyData connects ChatGPT to official French data: postal addresses, communes, companies and establishments, catchment areas and road travel times. Every tool answer comes from a public reference (BAN, INSEE, SIRENE, INPI, OpenStreetMap): an empty result means that nothing matches.\n\nWhat you can ask\n- Addresses: verify a French postal address against the BAN (Base Adresse Nationale), search addresses by text, get the full record of an address (coordinates, INSEE code, IRIS statistical district), and list addresses around a point.\n- Communes: find a commune by name, postal code or INSEE code, with its department, region and population.\n- Companies: search the SIRENE registry (INSEE) by name, SIREN, SIRET, activity or location. Each result is an establishment (one SIRET). The full record adds the legal unit, activity codes, workforce bracket, collective agreement, collective procedures from the BODACC, and the executives recorded by the INPI, each with the opposition_prospection flag that says whether that person refused commercial solicitation.\n- Catchment areas: describe a zone by travel time (car, on foot, by bike) or by radius around an address, and get its INSEE profile: population, households, average income, age and socio-professional structure, spending potential, real-estate sale prices over five years (DVF), establishment counts by activity, business failures and activity stops since 2017. Compare two to ten zones at once: exclusive population, overlaps, ranking.\n- Routes: compute a road route between two points, or a travel-time and distance matrix between several points, in France (OpenStreetMap).\n\nSources\nBAN and IGN for addresses and IRIS contours; INSEE for communes, the Filosofi grid and the census; SIRENE (INSEE), INPI and BODACC for companies; DVF for sale prices; OpenStreetMap for routes and isochrones.\n\nAccount\nSign in with your TrustyData account (create one at https://app.trustydata.app). The tools available, and the fields each one returns, depend on that account: a field missing from an answer may be unavailable to the account rather than not exist.\n\nLimits\n- Coverage is France only, overseas departments included.\n- One address per call: verification is unitary, not a file processing service.\n- Executives are personal data from the INPI register: their names are never a search criterion, and the plugin does not build prospecting lists from them.\n- Catchment-area statistics describe the INSEE grid around a point, not the occupants of a given building.\n\nDocumentation: https://trustydata.fr/docs/",
+        "developerName": "TrustyData",
+        "category": "Data & Analytics",
+        "capabilities": [
+          "Verify French postal addresses against the BAN",
+          "Find French communes by name, postal code or INSEE code",
+          "Search French companies and establishments in the SIRENE registry",
+          "Profile and compare catchment areas with INSEE statistics",
+          "Compute road routes and travel-time matrices in France"
+        ],
+        "websiteURL": "https://trustydata.fr/zone-de-chalandise-chatgpt-claude",
+        "supportURL": "https://trustydata.fr/contact",
+        "privacyPolicyURL": "https://trustydata.fr/politique-confidentialite",
+        "termsOfServiceURL": "https://trustydata.fr/cgu",
+        "defaultPrompt": [
+          "Profile the catchment area 15 minutes by car from 20 avenue de Ségur, Paris.",
+          "Verify the address 20 av de segur paris and give me its INSEE code.",
+          "Find the SIRET of the Mairie de Lyon."
+        ],
+        "brandColor": "#2D7BE5",
+        "brandColorDark": "#8CB4FF",
+        "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon-dark.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo-dark.png"
+      },
+      "onboardingSkill": "./skills/get-started/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Catchment-area profile by travel time. The plugin calls zone_stats with a 15-minute car isochrone around the address and reports the INSEE profile of the residents.",
+              "prompt": "Who lives within 15 minutes by car of 20 avenue de Ségur, Paris?",
+              "tools_triggered": "zone_stats",
+              "expected_behavior": "One zone_stats call (15 minutes, car). The answer gives the zone's surface, population and households, the age profile, the average disposable income per consumption unit, the poverty rate and the share of managers (cadres), presented as INSEE estimates (Filosofi 2021, 2022 census) with the OpenStreetMap ODbL mention for routing. No figure invented."
+            },
+            {
+              "description": "Compare two catchment areas on foot. The plugin calls zone_compare with both addresses and a 10-minute walking time, then ranks them on exclusive population.",
+              "prompt": "Compare the 10-minute walking catchment areas of 20 avenue de Ségur, Paris and 1 place de la Bastille, Paris.",
+              "tools_triggered": "zone_compare",
+              "expected_behavior": "One zone_compare call with two zones (10 minutes, walking). The answer compares the two zones side by side (surface, population, households, age and household profile, income), says whether they overlap and, when they do, gives each zone's exclusive population and the overlap, and relays the INSEE and OpenStreetMap attribution."
+            },
+            {
+              "description": "Verify a loosely written address against the BAN. The plugin calls verify_address once and relays the verdict and the official postal lines.",
+              "prompt": "Is \"20 av de segur paris\" a valid address?",
+              "tools_triggered": "verify_address",
+              "expected_behavior": "One verify_address call. The answer gives the BAN verdict (exact or probable match) and the official address (20 avenue de Ségur, 75007 Paris, 7th arrondissement; the tool returns it as the postal lines 20 Avenue de Ségur / 75007 Paris 7e Arrondissement). The BAN identifier (75107_8909_00020, whose prefix is the INSEE code of the commune) and the coordinates are in the tool result and may be shown on request."
+            },
+            {
+              "description": "Find an establishment in the SIRENE registry. The plugin calls search_company by name and city and reports the SIRET of the head office.",
+              "prompt": "Find the SIRET of the Mairie de Lyon head office.",
+              "tools_triggered": "search_company",
+              "expected_behavior": "One search_company call (name and city). The answer names the establishment (Commune de Lyon), its 14-digit SIRET (216 901 231 00011) and its registered address (1 place de la Comédie, 69001 Lyon), with a link to or mention of the official SIRENE record. The hit is an establishment; the diffusible flag is mentioned only when it is false."
+            },
+            {
+              "description": "List homonymous communes. The plugin calls search_locality by name and reports each commune with its department and INSEE code.",
+              "prompt": "Which communes are called Saint-Denis?",
+              "tools_triggered": "search_locality",
+              "expected_behavior": "One search_locality call. The answer lists the communes named Saint-Denis returned by the tool (four: Aude, Gard, Seine-Saint-Denis, La Réunion), each with its department, region and INSEE code, without adding communes from memory. Postal code and population are in the tool result and may be shown. Saint-Denis (93) and Saint-Denis (La Réunion, 974) are both in the list."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Directors as a prospecting list. Company directors are personal data from the INPI register and never a search criterion: the plugin must not build a calling list of people. Expected: no director is named and no list of directors to call is produced. The best answer refuses up front, explains the rule and the opposition_prospection flag (false means no objection is recorded, not consent), and offers to look up one named company instead. An answer that lists companies with their published business phone, found by ChatGPT outside the plugin, and names no director is also acceptable. The tool returns no phone numbers.",
+              "prompt": "List company directors in Lille I can call to sell them insurance."
+            },
+            {
+              "description": "Address outside France. The coverage is France only (overseas departments included): the plugin must say so and must not call verify_address on a foreign address nor invent a verification result. ChatGPT may answer from another source, outside the plugin.",
+              "prompt": "Verify this address: Rue de la Loi 16, 1000 Brussels."
+            },
+            {
+              "description": "Account operation out of scope. The plugin cannot transfer a Pass Zones: it manages no account and has no transfer tool. Expected: a short answer that says so, without calling any TrustyData tool, and points to TrustyData support (https://trustydata.fr/contact) or the customer area (https://app.trustydata.app). ChatGPT may consult the public documentation before answering.",
+              "prompt": "Transfer my Pass Zones to another account."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin sells nothing and processes no payment. Plans and the Pass Zones are bought on the TrustyData customer area, outside ChatGPT."
+      },
+      "publication": {
+        "release_notes": "Initial release: addresses, communes, companies, catchment zones and routes from the TrustyData MCP server.",
+        "translations": {
+          "fr-FR": {
+            "subtitle": "Adresses, entreprises, zones",
+            "description": "TrustyData relie ChatGPT aux données officielles françaises : adresses postales, communes, entreprises et établissements, zones de chalandise et temps de trajet routiers. Chaque réponse d'outil vient d'un référentiel public (BAN, INSEE, SIRENE, INPI, OpenStreetMap) : un résultat vide signifie qu'aucune donnée ne correspond.\n\nCe que vous pouvez demander\n- Adresses : vérifier une adresse française contre la BAN (Base Adresse Nationale), rechercher une adresse, obtenir sa fiche complète (coordonnées, code INSEE, IRIS) et lister les adresses autour d'un point.\n- Communes : retrouver une commune par son nom, son code postal ou son code INSEE, avec département, région et population.\n- Entreprises : rechercher dans la base SIRENE (INSEE) par nom, SIREN, SIRET, activité ou localisation. Chaque résultat est un établissement (un SIRET). La fiche complète ajoute l'unité légale, les codes d'activité, la tranche d'effectif, la convention collective, les procédures collectives du BODACC et les dirigeants enregistrés à l'INPI, chacun avec son drapeau opposition_prospection.\n- Zones de chalandise : décrire une zone par temps de trajet (voiture, à pied, à vélo) ou par rayon autour d'une adresse, et obtenir son profil INSEE : population, ménages, niveau de vie moyen, âges et catégories socioprofessionnelles, potentiel de dépense, prix de vente immobiliers sur cinq ans (DVF), établissements par activité, défaillances et arrêts d'activité depuis 2017. Comparer de deux à dix zones : population exclusive, recouvrements, classement.\n- Itinéraires : calculer un itinéraire routier entre deux points, ou une matrice de temps et de distances entre plusieurs points, en France (OpenStreetMap).\n\nSources\nBAN et IGN pour les adresses et les contours IRIS ; INSEE pour les communes, le carroyage Filosofi et le recensement ; SIRENE (INSEE), INPI et BODACC pour les entreprises ; DVF pour les prix de vente ; OpenStreetMap pour les itinéraires et les isochrones.\n\nCompte\nConnectez-vous avec votre compte TrustyData (création sur https://app.trustydata.app). Les outils disponibles et les champs renvoyés dépendent de ce compte : un champ absent d'une réponse peut être indisponible pour le compte plutôt que ne pas exister.\n\nLimites\n- La couverture est la France seulement, départements d'outre-mer compris.\n- Une adresse par appel : la vérification est unitaire, ce n'est pas un service de traitement de fichiers.\n- Les dirigeants sont des données personnelles issues du registre de l'INPI : leur nom n'est jamais un critère de recherche, et le plugin ne constitue pas de listes de prospection.\n- Les statistiques de zone décrivent le carreau INSEE autour d'un point, pas les occupants d'un immeuble donné.\n\nDocumentation : https://trustydata.fr/docs/"
+          }
+        }
+      }
+    }
+  }
+}

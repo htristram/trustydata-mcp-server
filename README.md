@@ -169,6 +169,22 @@ attributions returned by the tools:
 - **Business failures** — BODACC (DILA) and SIRENE (INSEE), geolocated establishments only
 - **Routing** — OpenStreetMap contributors (ODbL)
 
+## ChatGPT plugin package
+
+The `plugin-chatgpt/` directory is the source of the TrustyData plugin
+submitted to the ChatGPT plugin directory (Agent Plugins format: `plugin.json`,
+`mcp.json`, `skills/`, `assets/`). It points at the same hosted server and
+contains no secret: the demo video URL is injected at build time only.
+
+```bash
+python3 plugin-chatgpt/build_zip.py --video <demo recording url> --sortie dist/
+```
+
+The script packs only the allowlisted files, refuses any stray file or
+anything that looks like a secret, and writes `dist/trustydata-plugin-<version>.zip`.
+Upload that ZIP to the **existing** TrustyData plugin in the OpenAI developer
+dashboard (never as a second plugin). Tests: `pip install -r requirements-dev.txt && pytest`.
+
 ## Documentation
 
 Full API guides, endpoint reference and examples:
