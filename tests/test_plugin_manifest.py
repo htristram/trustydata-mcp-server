@@ -139,9 +139,17 @@ def test_les_icones_sont_carrees_et_declarees(interface):
         assert largeur == hauteur >= 48
 
 
-def test_les_icones_ont_un_fond_transparent_hors_de_la_pastille(interface):
+def test_les_icones_ont_un_fond_transparent_hors_de_la_plaque(interface):
+    """Le logo unique : visage blanc sur plaque ardoise à coins arrondis
+    (`logos/Visage blanc dans carré sans marque.png` du monorepo)."""
     from PIL import Image
     for cle in ("logo", "composerIcon", "logoDark", "composerIconDark"):
         image = Image.open(RACINE / interface[cle]).convert("RGBA")
         assert image.getpixel((0, 0))[3] == 0, f"{cle} : coin opaque, fond blanc aplati"
-        assert image.getpixel((image.width // 2, 40))[:3] == (0x2D, 0x7B, 0xE5), f"{cle} : pastille bleue sous le visage"
+        assert image.getpixel((image.width // 2, 40)) == (0x38, 0x42, 0x4D, 0xFF), f"{cle} : plaque ardoise sous le visage"
+        assert image.getpixel((image.width // 2, image.height // 2)) == (0xFF, 0xFF, 0xFF, 0xFF), f"{cle} : visage blanc"
+
+
+def test_les_quatre_icones_sont_le_meme_visuel(interface):
+    octets = {(RACINE / interface[cle]).read_bytes() for cle in ("logo", "composerIcon", "logoDark", "composerIconDark")}
+    assert len(octets) == 1
