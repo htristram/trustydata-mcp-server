@@ -20,7 +20,7 @@ Target: **apitracker.io** — MCP directory with an API-first audience.
 
 **Description (API angle — developer audience)**
 
-> TrustyData's REST API for French address quality, company lookup (SIRENE) and
+> TrustyData's REST API for French address quality, company lookup (SIRENE), e-mail address checks and
 > catchment-area statistics (INSEE), real-estate sale prices (DVF) and
 > establishment counts by activity (SIRENE) and business failures (BODACC), exposed natively over MCP.
 > Same endpoints, same official data (BAN/INSEE/IGN/OSM), two access modes:

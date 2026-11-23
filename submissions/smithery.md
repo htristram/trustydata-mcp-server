@@ -25,7 +25,7 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 
 **Tagline (short)**
 
-> French address quality, geocoding, routing, company lookup & catchment stats (BAN, INSEE, OSM).
+> French addresses, geocoding, routing, companies, catchment stats & email checks (BAN, INSEE, OSM).
 
 **Description (long)**
 
@@ -37,7 +37,9 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 > area — population, income, socio-professional profile, spending potential,
 > DVF real-estate sale prices and the establishments already trading there, by
 > activity, and the business failures there since 2017, of a
-> drive-time or radius zone — or compare up to ten of them. Data comes from
+> drive-time or radius zone — or compare up to ten of them. Check whether an
+> e-mail address can receive mail and what kind of address it is, without any
+> connection to the mailbox. Data comes from
 > official, regularly-updated open sources — BAN and INSEE for addresses and
 > communes, SIRENE (INSEE) and RNE (INPI) for companies, INSEE Filosofi and
 > census plus IGN contours for catchment areas, DGFiP DVF for real-estate prices, SIRENE again for the activity counts, BODACC (DILA) for the business failures, OpenStreetMap (ODbL) for routing. Results are authoritative: an empty
@@ -47,7 +49,8 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 
 ```
 address-validation, geocoding, france, routing, maps, data-quality,
-ban, insee, openstreetmap, sirene, company-data, catchment-area
+ban, insee, openstreetmap, sirene, company-data, catchment-area,
+email-verification
 ```
 
 **Tools (auto-detected by Smithery; min plan for reference)**
@@ -63,6 +66,7 @@ ban, insee, openstreetmap, sirene, company-data, catchment-area
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
+| `verify_email` | Check whether an e-mail address can receive mail (domain, mail provider) and what kind of address it is (role, disposable, no-reply). Never tells whether the mailbox itself is in use: no connection is made to it | Starter |
 | `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département), business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 | `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included, business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 
