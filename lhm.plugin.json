@@ -1,8 +1,8 @@
 {
   "identifier": "htristram-trustydata-mcp-server",
   "name": "TrustyData",
-  "version": "1.6.0",
-  "description": "Official French open data for AI assistants: verify and geocode addresses (BAN), look up French companies (SIRENE, INPI), compute routes and catchment-area statistics (INSEE).",
+  "version": "1.7.0",
+  "description": "Official French open data for AI assistants: verify and geocode addresses (BAN), look up French companies (SIRENE, INPI), compute routes and catchment-area statistics (INSEE), and check whether an e-mail address can receive mail.",
   "author": "TrustyData",
   "authorUrl": "https://trustydata.fr",
   "homepage": "https://trustydata.fr/usecases/mcp-qualite-donnees",
@@ -21,13 +21,14 @@
     "catchment-area",
     "geomarketing",
     "isochrone",
-    "routing"
+    "routing",
+    "email-verification"
   ],
   "localizations": [
     {
       "locale": "fr-FR",
       "name": "TrustyData",
-      "description": "Données officielles françaises pour assistants IA : vérifier et géocoder une adresse (BAN), rechercher une entreprise (SIRENE, INPI), calculer un itinéraire et chiffrer une zone de chalandise (INSEE).",
+      "description": "Données officielles françaises pour assistants IA : vérifier et géocoder une adresse (BAN), rechercher une entreprise (SIRENE, INPI), calculer un itinéraire, chiffrer une zone de chalandise (INSEE) et contrôler si une adresse e-mail peut recevoir du courrier.",
       "tags": [
         "france",
         "données ouvertes",
@@ -40,7 +41,8 @@
         "zone de chalandise",
         "géomarketing",
         "isochrone",
-        "itinéraire"
+        "itinéraire",
+        "vérification d'e-mail"
       ]
     }
   ],
@@ -518,6 +520,52 @@
         "fastmcp": {
           "tags": [
             "company"
+          ]
+        }
+      }
+    },
+    {
+      "name": "verify_email",
+      "title": "Vérifier une adresse e-mail",
+      "description": "Dit si une adresse e-mail a des chances de servir, sans rien lui envoyer. Deux questions : le domaine peut-il recevoir du courrier (DNS, serveur de messagerie ; `domain.mail_provider` nomme qui reçoit le courrier quand il est reconnu), et l'adresse est-elle d'un genre peu utile (adresse de rôle comme contact@, adresse jetable, no-reply, relais de confidentialité — des drapeaux séparés dans `classification`). Cet outil ne se connecte à AUCUNE boîte aux lettres : il ne sait pas si la boîte existe, et `mailbox_verified` vaut toujours `false`. Ne dis jamais qu'une adresse est « valide », « vérifiée » ou qu'elle « existe » ; dis qu'elle est utilisable, à risque ou inutilisable, au sens du verdict. Seul un message auquel la personne répond prouve qu'une boîte est lue. `verdict` se lit en premier : `utilisable` (le domaine peut recevoir et aucun signal ne pèse assez pour en douter — rien de plus) ; `risque` (le domaine peut recevoir, mais un signal pèse : adresse de rôle technique comme postmaster@ (une adresse de rôle générique seule, contact@, reste `utilisable`), domaine parqué, filtre qui exige une confirmation de l'expéditeur, plateforme d'envoi automatique, domaine sans serveur de messagerie déclaré…) ; `inutilisable` (syntaxe refusée, domaine qui ne peut pas recevoir, adresse jetable ou no-reply) ; `inconnu` (le DNS n'a pas répondu à temps : ce n'est PAS un refus, ne le présente jamais comme `inutilisable`, et propose de réessayer plus tard). `reasons[]` donne les raisons du verdict (`code`, `severity`, `detail`) : cite-les pour expliquer, la liste des codes est ouverte. `did_you_mean` est une adresse PROPOSÉE quand la saisie ressemble à une faute de frappe (gmail.con) : montre-la à l'utilisateur et laisse-le décider ; ne la substitue jamais à l'adresse saisie, et ne la soumets pas à sa place sans le dire. Le verdict porte toujours sur l'adresse saisie. `unread_probability` (0 à 1) et `score` (0 à 100, plus il est haut, mieux c'est) sont une estimation de départ pour trier des adresses, pas une mesure : ne les présente jamais comme un taux constaté. Ils valent `null` quand le verdict est `inconnu`. Une adresse par appel, et chaque appel est compté, quel que soit le verdict, `inconnu` compris. Devant une liste d'adresses, annonce le nombre d'appels que cela représente avant de les enchaîner. Aucune limite géographique : une adresse sur un domaine étranger se soumet comme une autre. Plan minimum : Starter. Cet outil n'est pas ouvert pendant le Pass Zones.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "description": "Adresse e-mail à contrôler, telle que saisie (chevrons, `mailto:` et ponctuation autour sont tolérés). Une seule adresse.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "annotations": {
+        "title": "Vérifier une adresse e-mail",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "_meta": {
+        "securitySchemes": [
+          {
+            "type": "oauth2",
+            "scopes": [
+              "openid",
+              "email",
+              "profile"
+            ]
+          }
+        ],
+        "fastmcp": {
+          "tags": [
+            "email"
           ]
         }
       }
