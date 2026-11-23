@@ -7,7 +7,8 @@
 Connect your LLM (Claude, ChatGPT, IDE assistants…) to **[TrustyData](https://trustydata.fr)** —
 French **address data quality**, geocoding, routing, **company lookup** (SIRENE)
 and **catchment-area statistics** (INSEE), built on official open data sources
-(**BAN**, **INSEE**, **SIRENE**, **IGN**, **OpenStreetMap**).
+(**BAN**, **INSEE**, **SIRENE**, **IGN**, **OpenStreetMap**) — plus **e-mail
+address checks** (syntax, DNS and curated lists).
 
 **▶️ [Try it live — public demo agent, no account needed](https://trustydata.fr/demo/mcp-agent)**
 Ask a real agent to verify an address, list communes, look up a company or
@@ -46,6 +47,13 @@ geographic context, directly inside your LLM conversation:
 - **Company lookup** — search French companies and establishments in the
   official **SIRENE** registry and get full records (executives, finances,
   collective agreements, depending on your plan).
+- **E-mail address checks** — can the domain of an e-mail address receive
+  mail, who handles that mail, and is the address of a kind that is rarely
+  read (role address, disposable, no-reply)? Syntax, DNS and curated lists
+  only: no connection is made to the mailbox, so the answer says nothing
+  about the mailbox itself. It gives a verdict with its reasons, an estimated score to
+  sort addresses, and a suggested address when the input looks like a typo.
+  One address per call; works for any domain, not only French ones.
 - **Catchment areas** — population, households, income, age and
   socio-professional profile, spending potential of a drive-time or radius zone
   (**INSEE** Filosofi & census); compare up to 10 zones and measure what each
@@ -80,6 +88,7 @@ returned depending on your plan.
 | `compute_route` | Full road route between points (car, foot, bike) | Business |
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
+| `verify_email` | Check whether an e-mail address can receive mail (domain, mail provider) and what kind of address it is (role, disposable, no-reply). Never tells whether the mailbox itself is in use: no connection is made to it | Starter |
 | `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département), business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 | `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included, business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 
@@ -148,6 +157,8 @@ Trouve les adresses proches du 2 avenue de la Gare à Annecy.
 Calcule l'itinéraire routier entre Lyon Part-Dieu et l'aéroport Saint-Exupéry.
 
 Trouve les entreprises de plomberie à Annecy et donne-moi la fiche du premier établissement.
+
+L'adresse contact@exemple.fr peut-elle recevoir du courrier, et est-ce une adresse de rôle ?
 
 Combien de personnes habitent à 15 minutes en voiture du 1 rue Scribe, 75009 Paris, et quel est leur niveau de vie ?
 

@@ -24,10 +24,11 @@ Target: **mcp.so** — high-traffic community directory of MCP servers.
 > verifies and normalizes any French address against the official BAN reference
 > (26M+ addresses), returns GPS coordinates, INSEE codes and neighborhood-level
 > socio-demographics, computes real road routes, looks up companies in the
-> official SIRENE registry and measures catchment areas (population, income,
+> official SIRENE registry, checks whether an e-mail address can receive mail and
+> measures catchment areas (population, income,
 > spending potential, real-estate sale prices (DVF), establishments by
 > activity, business failures). One remote server, OAuth
 > sign-in, free tier — works with Claude, ChatGPT (developer mode) and any MCP
 > client.
 
-**Tags**: `address, geocoding, france, maps, routing, open-data, sirene, company-data, catchment-area`
+**Tags**: `address, geocoding, france, maps, routing, open-data, sirene, company-data, catchment-area, email-verification`
