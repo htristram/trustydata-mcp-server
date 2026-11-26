@@ -47,4 +47,15 @@ def test_le_readme_ne_promet_rien_sur_les_offres_de_chatgpt():
     section = _section_connect().lower()
     for promesse in ("free chatgpt", "any chatgpt plan", "all chatgpt plans can"):
         assert promesse not in section, promesse
-    assert "depends on your chatgpt plan" in section
+    assert "depends on your chatgpt plan" in " ".join(section.split())
+
+
+def test_le_kit_mcp_so_ne_laisse_pas_croire_que_le_plugin_verifie_les_e_mails():
+    """Le kit cite le contrôle d'e-mail et ChatGPT dans la même phrase : il
+    porte la même réserve que le README, à retirer le même jour."""
+    kit = (RACINE / "submissions/mcp-so.md").read_text(encoding="utf-8")
+    assert "not yet available in the ChatGPT plugin" in kit
+
+
+def test_le_readme_ne_dit_pas_ce_que_la_fiche_d_openai_affiche():
+    assert "install button is offered" not in " ".join(_section_connect().split())

@@ -118,14 +118,14 @@ assistant calls it.
 
 ### ChatGPT (plugin directory)
 
-TrustyData is listed in the ChatGPT plugin directory since 26 November 2026:
+TrustyData has been listed in the ChatGPT plugin directory since 26 November 2026:
 
 **[Install the TrustyData plugin in ChatGPT](https://chatgpt.com/plugins/plugin_asdk_app_6af0c6aa1aa08191acea5ac872785fb4)**
 
 Open the listing (or search for "TrustyData" in the plugin directory), install
 the plugin, then sign in with the **same e-mail** as your TrustyData account:
-it is what links ChatGPT to your plan and quota. Whether the install button is
-offered depends on your ChatGPT plan, workspace and region.
+it is what links ChatGPT to your plan and quota. Installing a plugin depends on
+your ChatGPT plan, workspace and region.
 
 The e-mail check tool (`verify_email`), added to the server on 23 November
 2026, is not yet available in the ChatGPT plugin: it is pending approval by

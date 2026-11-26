@@ -29,6 +29,6 @@ Target: **mcp.so** — high-traffic community directory of MCP servers.
 > spending potential, real-estate sale prices (DVF), establishments by
 > activity, business failures). One remote server, OAuth
 > sign-in, free tier — works with Claude, ChatGPT (plugin directory) and any MCP
-> client.
+> client. The e-mail check is not yet available in the ChatGPT plugin.
 
 **Tags**: `address, geocoding, france, maps, routing, open-data, sirene, company-data, catchment-area, email-verification`
