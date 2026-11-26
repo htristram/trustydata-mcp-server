@@ -116,6 +116,21 @@ assistant calls it.
 
 ## Connect
 
+### ChatGPT (plugin directory)
+
+TrustyData is listed in the ChatGPT plugin directory since 26 November 2026:
+
+**[Install the TrustyData plugin in ChatGPT](https://chatgpt.com/plugins/plugin_asdk_app_6af0c6aa1aa08191acea5ac872785fb4)**
+
+Open the listing (or search for "TrustyData" in the plugin directory), install
+the plugin, then sign in with the **same e-mail** as your TrustyData account:
+it is what links ChatGPT to your plan and quota. Whether the install button is
+offered depends on your ChatGPT plan, workspace and region.
+
+The e-mail check tool (`verify_email`), added to the server on 23 November
+2026, is not yet available in the ChatGPT plugin: it is pending approval by
+OpenAI. It works in Claude and in any other MCP client.
+
 ### Claude (claude.ai / Claude Desktop)
 
 Add a **custom connector** pointing to:
@@ -183,7 +198,8 @@ attributions returned by the tools:
 ## ChatGPT plugin package
 
 The `plugin-chatgpt/` directory is the source of the TrustyData plugin
-submitted to the ChatGPT plugin directory (Agent Plugins format: `plugin.json`,
+published in the ChatGPT plugin directory (see [Connect](#connect); Agent
+Plugins format: `plugin.json`,
 `mcp.json`, `skills/`, `assets/`). It points at the same hosted server and
 contains no secret: the demo video URL is injected at build time only.
 
