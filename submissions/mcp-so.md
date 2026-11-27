@@ -24,11 +24,11 @@ Target: **mcp.so** — high-traffic community directory of MCP servers.
 > verifies and normalizes any French address against the official BAN reference
 > (26M+ addresses), returns GPS coordinates, INSEE codes and neighborhood-level
 > socio-demographics, computes real road routes, looks up companies in the
-> official SIRENE registry, checks whether an e-mail address can receive mail and
-> measures catchment areas (population, income,
+> official SIRENE registry, checks whether an e-mail address can receive mail, checks whether a phone
+> number fits its country's numbering plan and measures catchment areas (population, income,
 > spending potential, real-estate sale prices (DVF), establishments by
 > activity, business failures). One remote server, OAuth
 > sign-in, free tier — works with Claude, ChatGPT (plugin directory) and any MCP
-> client. The e-mail check is not yet available in the ChatGPT plugin.
+> client. The e-mail and phone number checks are not yet available in the ChatGPT plugin.
 
-**Tags**: `address, geocoding, france, maps, routing, open-data, sirene, company-data, catchment-area, email-verification`
+**Tags**: `address, geocoding, france, maps, routing, open-data, sirene, company-data, catchment-area, email-verification, phone-verification`

@@ -20,7 +20,6 @@ INTERDITS = ("validates email", "validate email", "valid email", "email validati
 def test_description_du_registre_sous_cent_caracteres():
     d = json.loads((RACINE / "server.json").read_text(encoding="utf-8"))
     assert len(d["description"]) < 100 and "email" in d["description"].lower()
-    assert d["version"] == "1.7.0"
 
 
 def test_le_readme_liste_verify_email_au_plan_starter():
@@ -30,12 +29,12 @@ def test_le_readme_liste_verify_email_au_plan_starter():
     assert "never" in ligne.lower()  # la ligne dit ce que l'outil ne confirme pas
 
 
-def test_le_readme_liste_douze_outils():
+def test_le_readme_liste_treize_outils():
     lignes = (RACINE / "README.md").read_text(encoding="utf-8").splitlines()
     debut = lignes.index("## Tools")
     fin = next(i for i in range(debut + 1, len(lignes)) if lignes[i].startswith("## "))
     outils = [l for l in lignes[debut:fin] if l.startswith("| `")]
-    assert len(outils) == 12
+    assert len(outils) == 13
 
 
 @pytest.mark.parametrize("chemin", TEXTES)

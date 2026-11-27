@@ -26,8 +26,8 @@ whether the listing appeared automatically before submitting manually.
 
 > Ask your assistant to "check this address" or "enrich this customer file with
 > INSEE codes" and get answers grounded in official French open data. TrustyData
-> exposes 12 tools and 5 guided prompts — verify, autocomplete, locality search, proximity, routing,
-> territorial enrichment, company lookup (SIRENE), e-mail address checks and catchment-area statistics
+> exposes 13 tools and 5 guided prompts — verify, autocomplete, locality search, proximity, routing,
+> territorial enrichment, company lookup (SIRENE), e-mail address checks, phone number checks and catchment-area statistics
 > (INSEE, plus DVF real-estate sale prices and establishment counts by activity
 > from SIRENE and business failures from the BODACC) — through a single hosted MCP endpoint. No local
 > install: connect via URL + OAuth in two minutes.

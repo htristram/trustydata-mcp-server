@@ -25,7 +25,7 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 
 **Tagline (short)**
 
-> French addresses, geocoding, routing, companies, catchment stats & email checks (BAN, INSEE, OSM).
+> French addresses, routing, companies, catchment stats, email & phone checks (BAN, INSEE, OSM).
 
 **Description (long)**
 
@@ -39,7 +39,9 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 > activity, and the business failures there since 2017, of a
 > drive-time or radius zone — or compare up to ten of them. Check whether an
 > e-mail address can receive mail and what kind of address it is, without any
-> connection to the mailbox. Data comes from
+> connection to the mailbox, and whether a phone number fits the numbering plan
+> of its country (ARCEP allocated ranges for French numbers) and looks made up,
+> without ever calling the line. Data comes from
 > official, regularly-updated open sources — BAN and INSEE for addresses and
 > communes, SIRENE (INSEE) and RNE (INPI) for companies, INSEE Filosofi and
 > census plus IGN contours for catchment areas, DGFiP DVF for real-estate prices, SIRENE again for the activity counts, BODACC (DILA) for the business failures, OpenStreetMap (ODbL) for routing. Results are authoritative: an empty
@@ -50,7 +52,7 @@ TrustyData is an **already-hosted remote MCP server**. Smithery proxies to it
 ```
 address-validation, geocoding, france, routing, maps, data-quality,
 ban, insee, openstreetmap, sirene, company-data, catchment-area,
-email-verification
+email-verification, phone-verification
 ```
 
 **Tools (auto-detected by Smithery; min plan for reference)**
@@ -67,6 +69,7 @@ email-verification
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
 | `verify_email` | Check whether an e-mail address can receive mail (domain, mail provider) and what kind of address it is (role, disposable, no-reply). Never tells whether the mailbox itself is in use: no connection is made to it | Starter |
+| `verify_phone` | Check whether a phone number fits the numbering plan of its country (for French numbers, whether it sits in a range allocated by ARCEP) and whether it looks made up. Never calls the line, never tells whether it is in use, and names no operator or subscriber | Starter |
 | `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département), business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 | `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included, business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 
@@ -78,6 +81,7 @@ Quelle est la population de la commune de Bourg-en-Bresse ?
 Trouve les adresses proches du 2 avenue de la Gare à Annecy.
 Calcule l'itinéraire routier entre Lyon Part-Dieu et l'aéroport Saint-Exupéry.
 Trouve les entreprises de plomberie à Annecy et donne-moi la fiche du premier établissement.
+Le numéro 06 12 34 56 78 entre-t-il dans le plan de numérotation français, et a-t-il l'air fabriqué ?
 Combien de personnes habitent à 15 minutes en voiture du 1 rue Scribe, 75009 Paris ?
 ```
 

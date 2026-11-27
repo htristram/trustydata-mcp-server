@@ -21,7 +21,7 @@ check the current process in Anthropic's developer docs.
 > Claude. TrustyData s'appuie exclusivement sur les référentiels officiels (BAN,
 > INSEE, IGN, OpenStreetMap) : vérification d'adresse, coordonnées GPS, code
 > IRIS, données socio-démographiques de quartier, itinéraires routiers, recherche
-> d'entreprises (SIRENE), contrôle d'adresses e-mail (le domaine peut-il recevoir du courrier) et statistiques de zone de chalandise (population,
+> d'entreprises (SIRENE), contrôle d'adresses e-mail (le domaine peut-il recevoir du courrier), contrôle de numéros de téléphone (le numéro tient-il dans le plan de numérotation de son pays, a-t-il l'air fabriqué ?) et statistiques de zone de chalandise (population,
 > revenus, profil, potentiel de dépense, prix de vente immobiliers (DVF),
 > établissements par activité (SIRENE)). Aucun
 > code à écrire — connectez-vous et posez votre question. Plan gratuit : 20 000
@@ -34,7 +34,7 @@ check the current process in Anthropic's developer docs.
 > TrustyData relies exclusively on official French reference data (BAN, INSEE,
 > IGN, OpenStreetMap): address verification, GPS coordinates, INSEE territorial
 > codes, neighborhood-level demographics, road routing, company lookup (SIRENE),
-> e-mail address checks (can the domain receive mail) and catchment-area statistics (population, income, profile, spending
+> e-mail address checks (can the domain receive mail), phone number checks (does the number fit its country's numbering plan, does it look made up) and catchment-area statistics (population, income, profile, spending
 > potential, real-estate sale prices (DVF), establishment counts by activity
 > (SIRENE), business failures since 2017 (BODACC)). No code required —
 > sign in and ask. Free plan: 20,000 requests/month; the catchment-area tools also open with the
@@ -44,6 +44,7 @@ check the current process in Anthropic's developer docs.
 
 ```
 Vérifie cette adresse : "215 acac ste euphemie"
+Le numéro 06 12 34 56 78 entre-t-il dans le plan de numérotation français, et a-t-il l'air fabriqué ?
 Quel est le code IRIS du 12 rue de la République à Lyon ?
 Compare les temps de trajet entre ces trois agences et le centre de Dijon.
 Combien de personnes habitent à 15 minutes en voiture de la gare de Dijon, et quel est leur niveau de vie ?
