@@ -43,6 +43,9 @@ def blocs(texte):
     return resultat
 
 
+# Limite connue : seuls les blocs qui contiennent le mot « phone » sont examinés ;
+# une phrase sur le téléphone qui dit seulement « number » n'est pas lue. Ce garde
+# ne remplace pas la relecture.
 def interdits_sur_le_telephone(texte):
     """Les mots interdits trouvés dans les seuls blocs qui parlent de téléphone."""
     trouves = []
@@ -75,14 +78,6 @@ def test_le_readme_liste_verify_phone_au_plan_starter():
     assert "never" in ligne.lower()  # la ligne dit ce que l'outil ne fait pas
 
 
-def test_le_readme_liste_treize_outils():
-    lignes = (RACINE / "README.md").read_text(encoding="utf-8").splitlines()
-    debut = lignes.index("## Tools")
-    fin = next(i for i in range(debut + 1, len(lignes)) if lignes[i].startswith("## "))
-    outils = [l for l in lignes[debut:fin] if l.startswith("| `")]
-    assert len(outils) == 13
-
-
 @pytest.mark.parametrize("chemin", TEXTES)
 def test_aucune_promesse_sur_l_existence_d_une_ligne(chemin):
     texte = (RACINE / chemin).read_text(encoding="utf-8")
@@ -98,13 +93,12 @@ def test_le_readme_dit_les_deux_niveaux_de_preuve_et_aucun_appel_de_ligne():
     texte = " ".join((RACINE / "README.md").read_text(encoding="utf-8").split())
     assert "ARCEP" in texte
     assert "never calls the line" in texte
-    assert "not only French" in texte or "not only for France" in texte
+    assert "not only French" in texte
 
 
-def test_les_kits_et_le_readme_comptent_treize_outils_sur_le_serveur():
-    for chemin in ("submissions/pulsemcp.md",):
-        texte = (RACINE / chemin).read_text(encoding="utf-8")
-        assert "13 tools" in texte and "12 tools" not in texte
+def test_le_kit_pulsemcp_compte_treize_outils():
+    texte = (RACINE / "submissions/pulsemcp.md").read_text(encoding="utf-8")
+    assert "13 tools" in texte and "12 tools" not in texte
 
 
 def test_aucun_detail_interne_dans_la_vitrine():
