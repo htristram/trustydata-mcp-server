@@ -1,8 +1,8 @@
 {
   "identifier": "htristram-trustydata-mcp-server",
   "name": "TrustyData",
-  "version": "1.7.0",
-  "description": "Official French open data for AI assistants: verify and geocode addresses (BAN), look up French companies (SIRENE, INPI), compute routes and catchment-area statistics (INSEE), and check whether an e-mail address can receive mail.",
+  "version": "1.8.0",
+  "description": "Official French open data for AI assistants: verify and geocode addresses (BAN), look up French companies (SIRENE, INPI), compute routes and catchment-area statistics (INSEE), check whether an e-mail address can receive mail, and whether a phone number fits its country's numbering plan.",
   "author": "TrustyData",
   "authorUrl": "https://trustydata.fr",
   "homepage": "https://trustydata.fr/usecases/mcp-qualite-donnees",
@@ -22,13 +22,14 @@
     "geomarketing",
     "isochrone",
     "routing",
-    "email-verification"
+    "email-verification",
+    "phone-verification"
   ],
   "localizations": [
     {
       "locale": "fr-FR",
       "name": "TrustyData",
-      "description": "Données officielles françaises pour assistants IA : vérifier et géocoder une adresse (BAN), rechercher une entreprise (SIRENE, INPI), calculer un itinéraire, chiffrer une zone de chalandise (INSEE) et contrôler si une adresse e-mail peut recevoir du courrier.",
+      "description": "Données officielles françaises pour assistants IA : vérifier et géocoder une adresse (BAN), rechercher une entreprise (SIRENE, INPI), calculer un itinéraire, chiffrer une zone de chalandise (INSEE) contrôler si une adresse e-mail peut recevoir du courrier et si un numéro de téléphone a sa place dans le plan de numérotation de son pays.",
       "tags": [
         "france",
         "données ouvertes",
@@ -42,7 +43,8 @@
         "géomarketing",
         "isochrone",
         "itinéraire",
-        "vérification d'e-mail"
+        "vérification d'e-mail",
+        "vérification de téléphone"
       ]
     }
   ],
@@ -726,6 +728,64 @@
         "fastmcp": {
           "tags": [
             "locality"
+          ]
+        }
+      }
+    },
+    {
+      "name": "verify_phone",
+      "title": "Vérifier un numéro de téléphone",
+      "description": "Dit si un numéro de téléphone a sa place dans le plan de numérotation du pays où il est censé être, et s'il a l'air fabriqué. Il lit une saisie libre (espaces, points, tirets, parenthèses, texte autour) et rend dans `extracted` les chiffres qu'il y a lus : relis-les avec l'utilisateur. Deux numéros dans la même saisie donnent `inutilisable`. Cet outil n'appelle JAMAIS la ligne et n'interroge aucun opérateur : `line_verified` vaut toujours `false`. Ne dis jamais qu'un numéro est « valide », qu'il « existe » ou qu'il est « en service » ; dis qu'il est utilisable, à risque ou inutilisable, au sens du verdict. Il ne donne ni l'opérateur ni le titulaire de la ligne, et ne sert pas à trouver le numéro de quelqu'un. `plan.status` dit le niveau de preuve, et tu le précises en rendant le résultat : `allocated_range` pour un numéro français d'une tranche attribuée par l'ARCEP (la preuve la plus forte, sur la tranche et pas sur le numéro : rien ne dit qu'il est attribué à un abonné) ; `plan_conformant` pour le numéro d'un autre pays (simple conformité au plan de ce pays, preuve plus faible). La liste est ouverte : d'autres valeurs nomment d'autres cas, par exemple `frozen_range` (tranche gelée), `unallocated_range` (hors de toute tranche attribuée), `fiction_range` (tranche de fiction), `machine_range` (numéro réservé aux machines) ou `unknown` (non jugé) ; c'est `verdict` qui conclut. `verdict` se lit en premier : `utilisable` (le numéro a sa place dans le plan et rien ne le fait paraître fabriqué, rien de plus : la ligne n'a pas été appelée) ; `risque` (un signal pèse sans suffire à écarter le numéro : tranche gelée, motif d'aspect fabriqué, indicatif qui ne correspond pas au territoire…) ; `inutilisable` (saisie illisible, deux numéros, numéro hors du plan du pays, numéro de fiction ou réservé aux machines) ; `inconnu` (le service ne peut pas juger : pays manquant, pays non couvert, table de l'ARCEP trop ancienne). `inconnu` n'est PAS un refus : ne le présente jamais comme `inutilisable`, ne fais rien supprimer, et redemande le pays s'il manque. `country` : fournis-le dès que le numéro n'est pas écrit avec son indicatif `+`. Déduis-le du contexte quand il est net, et dis lequel tu as retenu ; sinon demande-le à l'utilisateur. Sans pays et sans `+`, l'appel rend `inconnu` et il est compté. `normalized` réécrit le numéro saisi lui-même (`e164`, `national`, `international`) et vaut `null` quand la saisie n'est pas un numéro. `did_you_mean`, lui, est un AUTRE numéro, PROPOSÉ (au format E.164), par exemple quand l'indicatif saisi ne correspond pas au territoire : montre-le à l'utilisateur et laisse-le décider ; ne le substitue jamais au numéro saisi, et ne le soumets pas à sa place sans le dire. Le verdict porte toujours sur le numéro saisi. Un motif d'aspect fabriqué (une suite ou un chiffre répété, dans `classification.patterns`, raison `suspicious_pattern`) est un indice qui donne `risque`, jamais une preuve que le numéro est faux. Les drapeaux de `classification` sont séparés, ne les fusionne pas ; `telemarketing_range` informe sans changer le verdict (tranche que le plan réserve notamment au démarchage téléphonique). `reasons[]` donne les raisons du verdict (`code`, `severity`, `detail`) : cite-les pour expliquer, la liste des codes est ouverte. `attribution` : quand elle est renseignée, cite la mention de l'ARCEP avec le résultat. Un numéro par appel, et chaque réponse est comptée, quel que soit le verdict, `inconnu` compris. Devant une liste de numéros, annonce le nombre d'appels que cela représente avant de les enchaîner. Aucune limite géographique : un numéro étranger se soumet comme un autre, avec le niveau de preuve plus faible de `plan_conformant`. Plan minimum : Starter. Cet outil n'est pas ouvert pendant le Pass Zones.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "description": "Le numéro à contrôler : un seul numéro, tel que saisi (espaces, points, tirets ou texte autour sont tolérés), en chaîne, jamais en nombre (le zéro initial et le `+` se perdraient).",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Code ISO 3166 à deux ou trois lettres du pays où le numéro est censé être (FR, BE, CH…). À fournir dès que le numéro n'est pas écrit avec son indicatif `+` : sans lui, un tel numéro rend `inconnu`."
+          }
+        },
+        "required": [
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "annotations": {
+        "title": "Vérifier un numéro de téléphone",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "_meta": {
+        "securitySchemes": [
+          {
+            "type": "oauth2",
+            "scopes": [
+              "openid",
+              "email",
+              "profile"
+            ]
+          }
+        ],
+        "fastmcp": {
+          "tags": [
+            "phone"
           ]
         }
       }
