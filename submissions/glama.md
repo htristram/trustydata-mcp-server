@@ -32,9 +32,10 @@ public status page, OAuth).
 > against the official BAN registry, geocoding (WGS84/Lambert 93), INSEE
 > territorial enrichment, proximity search, road routing, company lookup in the
 > official SIRENE registry, e-mail address checks (can the domain receive mail,
-> what kind of address is it) and catchment-area statistics (INSEE, plus DVF
+> what kind of address is it), phone number checks (does the number fit its
+> country's numbering plan, does it look made up) and catchment-area statistics (INSEE, plus DVF
 > real-estate sale prices and establishment counts by activity and business failures). Results are
 > authoritative: an empty result means no match, never a guess. Free tier
 > available (20,000 requests/month).
 
-**Tags**: `address-validation, geocoding, france, routing, data-quality, ban, insee, openstreetmap, sirene, company-data, catchment-area, email-verification`
+**Tags**: `address-validation, geocoding, france, routing, data-quality, ban, insee, openstreetmap, sirene, company-data, catchment-area, email-verification, phone-verification`

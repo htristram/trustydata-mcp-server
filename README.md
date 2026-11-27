@@ -8,7 +8,8 @@ Connect your LLM (Claude, ChatGPT, IDE assistants…) to **[TrustyData](https://
 French **address data quality**, geocoding, routing, **company lookup** (SIRENE)
 and **catchment-area statistics** (INSEE), built on official open data sources
 (**BAN**, **INSEE**, **SIRENE**, **IGN**, **OpenStreetMap**) — plus **e-mail
-address checks** (syntax, DNS and curated lists).
+address checks** (syntax, DNS and curated lists) and **phone number
+checks** (numbering plan, ARCEP allocated ranges for French numbers).
 
 **▶️ [Try it live — public demo agent, no account needed](https://trustydata.fr/demo/mcp-agent)**
 Ask a real agent to verify an address, list communes, look up a company or
@@ -54,6 +55,15 @@ geographic context, directly inside your LLM conversation:
   about the mailbox itself. It gives a verdict with its reasons, an estimated score to
   sort addresses, and a suggested address when the input looks like a typo.
   One address per call; works for any domain, not only French ones.
+- **Phone number checks** — does a phone number, typed in any common format
+  with its country, fit the numbering plan of that country, and does it look
+  made up? For French numbers the answer rests on the ranges allocated by
+  **ARCEP**, the French regulator; for other countries it is a plan-conformity
+  check only, a weaker level of evidence, and the answer says which one
+  applies. It never calls the line and queries no operator, so it says nothing
+  about whether the line is in use, and it names no operator or subscriber. It
+  gives a verdict with its reasons, and a suggested number when the input
+  looks like a typo. One number per call; not only French ones.
 - **Catchment areas** — population, households, income, age and
   socio-professional profile, spending potential of a drive-time or radius zone
   (**INSEE** Filosofi & census); compare up to 10 zones and measure what each
@@ -89,6 +99,7 @@ returned depending on your plan.
 | `search_company` | Search French companies & establishments in the SIRENE registry (name, SIREN/SIRET, activity, location) | Discovery (proximity search: Growth) |
 | `get_company_details` | Full record of an establishment or company (identity, executives, finances, collective agreements — by plan) | Discovery |
 | `verify_email` | Check whether an e-mail address can receive mail (domain, mail provider) and what kind of address it is (role, disposable, no-reply). Never tells whether the mailbox itself is in use: no connection is made to it | Starter |
+| `verify_phone` | Check whether a phone number fits the numbering plan of its country (for French numbers, whether it sits in a range allocated by ARCEP) and whether it looks made up. Never calls the line, never tells whether it is in use, and names no operator or subscriber | Starter |
 | `zone_stats` | Everything about a catchment area (drive time or radius): population, households, income, age & socio-professional profile, spending potential, DVF real-estate sale prices (5-year trend, vs. département) and establishment counts by activity (SIRENE, density per 10,000 inhabitants, index vs. France or the dominant département), business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 | `zone_compare` | Compare 2–10 catchment areas: exclusive population, pairwise overlaps, ranking — each with its full `zone_stats` block, real-estate prices and activity counts included, business failures and activity stops since 2017 (BODACC + SIRENE) | Growth, or Pass Zones (15-day, €30 excl. VAT) |
 
@@ -128,8 +139,10 @@ it is what links ChatGPT to your plan and quota. Installing a plugin depends on
 your ChatGPT plan, workspace and region.
 
 The e-mail check tool (`verify_email`), added to the server on 23 November
-2026, is not yet available in the ChatGPT plugin: it is pending approval by
-OpenAI. It works in Claude and in any other MCP client.
+2026, and the phone number check tool (`verify_phone`), added after it, are
+not yet available in the ChatGPT plugin: they are pending approval by OpenAI,
+so the plugin offers eleven of the server's thirteen tools. Both work in
+Claude and in any other MCP client.
 
 ### Claude (claude.ai / Claude Desktop)
 
@@ -174,6 +187,8 @@ Calcule l'itinéraire routier entre Lyon Part-Dieu et l'aéroport Saint-Exupéry
 Trouve les entreprises de plomberie à Annecy et donne-moi la fiche du premier établissement.
 
 L'adresse contact@exemple.fr peut-elle recevoir du courrier, et est-ce une adresse de rôle ?
+
+Le numéro 06 12 34 56 78 entre-t-il dans le plan de numérotation français, et a-t-il l'air fabriqué ?
 
 Combien de personnes habitent à 15 minutes en voiture du 1 rue Scribe, 75009 Paris, et quel est leur niveau de vie ?
 

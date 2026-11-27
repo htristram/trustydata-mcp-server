@@ -3,7 +3,7 @@
 La vitrine dit comment l'installer et ne renvoie plus au mode développeur de
 ChatGPT. Le lien est celui de la fiche, sans le paramètre `?search=` que
 ChatGPT ajoute à l'URL copiée. `verify_email` est entré au serveur pendant la
-revue : tant qu'OpenAI ne l'a pas approuvé, le README le dit.
+revue, `verify_phone` ensuite : tant qu'OpenAI ne les a pas approuvés, le README le dit.
 """
 import pathlib
 import re
@@ -39,8 +39,12 @@ def test_plus_aucun_texte_ne_renvoie_au_mode_developpeur():
 
 def test_le_readme_dit_que_la_verification_d_e_mail_attend_son_approbation():
     """À retirer, avec la phrase, le jour où le portail OpenAI affiche
-    `verify_email` approuvé."""
-    assert "not yet available in the ChatGPT plugin" in _section_connect()
+    `verify_email` approuvé (et `verify_phone`, qui attend la sienne)."""
+    section = _section_connect()
+    assert "not yet available in the ChatGPT plugin" in section
+    assert "`verify_email`" in section
+    assert "`verify_phone`" in section
+    assert "eleven of the server's thirteen tools" in " ".join(section.split())
 
 
 def test_le_readme_ne_promet_rien_sur_les_offres_de_chatgpt():
@@ -51,10 +55,12 @@ def test_le_readme_ne_promet_rien_sur_les_offres_de_chatgpt():
 
 
 def test_le_kit_mcp_so_ne_laisse_pas_croire_que_le_plugin_verifie_les_e_mails():
-    """Le kit cite le contrôle d'e-mail et ChatGPT dans la même phrase : il
+    """Le kit cite les contrôles d'e-mail et de numéro et ChatGPT dans la même phrase : il
     porte la même réserve que le README, à retirer le même jour."""
     kit = (RACINE / "submissions/mcp-so.md").read_text(encoding="utf-8")
     assert "not yet available in the ChatGPT plugin" in kit
+    phrase = next(p for p in kit.split(". ") if "not yet available in the ChatGPT plugin" in p).lower()
+    assert "e-mail" in phrase and "phone" in phrase
 
 
 def test_le_readme_ne_dit_pas_ce_que_la_fiche_d_openai_affiche():
